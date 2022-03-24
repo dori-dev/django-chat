@@ -1,3 +1,7 @@
+"""chat views
+"""
 from django.shortcuts import render
 
-# Create your views here.
+
+def index(request: object):
+    return render(request, "chat/index.html")
