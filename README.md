@@ -1,2 +1,2 @@
-# django-chat
+# Django Chat
 Create chat application with Django.
