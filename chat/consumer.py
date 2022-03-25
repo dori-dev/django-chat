@@ -13,8 +13,8 @@ class ChatConsumer(WebsocketConsumer):
         pass
 
     def receive(self, text_data: Union[str, bytes]):
-        text_data_json: dict = json.loads(text_data)
-        message: str = text_data_json['message']
+        text_data_dict: dict = json.loads(text_data)
+        message: str = text_data_dict['message']
         self.send(text_data=json.dumps({
             'message': message*2
         }))
