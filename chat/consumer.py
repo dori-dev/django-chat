@@ -16,5 +16,5 @@ class ChatConsumer(WebsocketConsumer):
         text_data_dict: dict = json.loads(text_data)
         message: str = text_data_dict['message']
         self.send(text_data=json.dumps({
-            'message': message*2
+            'message': message
         }))
