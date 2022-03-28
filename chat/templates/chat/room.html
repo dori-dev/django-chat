@@ -18,6 +18,8 @@
         document.getElementById("room-name").textContent
       );
 
+      var username = {{ username }}
+
       const chatSocket = new ReconnectingWebSocket(
         "ws://" + window.location.host + "/ws/" + roomName + "/"
       );
@@ -26,6 +28,7 @@
         chatSocket.send(
           JSON.stringify({
             command: "fetch_message",
+            room_name: roomName,
           })
         );
         document.querySelector("#chat-log").value = "";
@@ -33,7 +36,6 @@
 
       chatSocket.onmessage = function (e) {
         const data = JSON.parse(e.data);
-        console.log(data)
         document.querySelector("#chat-log").value += data.message + "\n";
       };
 
@@ -56,6 +58,8 @@
           JSON.stringify({
             message: message,
             command: "new_message",
+            username: username,
+            room_name: roomName,
           })
         );
         messageInputDom.value = "";

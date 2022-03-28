@@ -6,18 +6,23 @@ from asgiref.sync import async_to_sync
 from channels.generic.websocket import WebsocketConsumer
 from rest_framework.renderers import JSONRenderer
 from .serializers import MessageSerializer
-from .models import Message
+from .models import Message, User
 
 
 class ChatConsumer(WebsocketConsumer):
     """chat consumer
     """
 
-    def new_message(self, data):
-        pass
+    def new_message(self, data: dict):
+        author = User.objects.get(username=data['username'])
+        # use `objects.create` because I just want `insert` message!
+        Message.objects.create(
+            author=author,
+            content=data['message'],
+            room_name=data['room_name'])
 
-    def fetch_message(self):
-        query_set: QuerySet[Message] = Message.last_messages()
+    def fetch_message(self, room_name: str):
+        query_set: QuerySet[Message] = Message.last_messages(room_name)
         content: bytes = self.message_serializer(query_set)
         messages: list = json.loads(content)
         for message in messages:
@@ -54,10 +59,11 @@ class ChatConsumer(WebsocketConsumer):
         # execute the function according to the given `command`
         if command == 'new_message':
             message: str = text_data_dict['message']
-            self.new_message(message)
+            self.new_message(text_data_dict)
             self.send_to_room(message)
         elif command == 'fetch_message':
-            self.fetch_message()
+            room_name: str = text_data_dict['room_name']
+            self.fetch_message(room_name)
         else:
             print(f'Invalid Command: "{command}"')
 
