@@ -6,7 +6,7 @@ import json
 
 
 def index(request: object):
-    return render(request, "chat/index.html")
+    return render(request, "index.html")
 
 
 def room(request: object, room_name: str):
@@ -15,4 +15,4 @@ def room(request: object, room_name: str):
         "room_name": room_name,
         "username": mark_safe(json.dumps(username)),
     }
-    return render(request, "chat/room.html", context)
+    return render(request, "room.html", context)
