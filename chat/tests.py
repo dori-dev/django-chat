@@ -75,7 +75,7 @@ class ChatTests(ChannelsLiveServerTestCase):
             self._close_all_new_windows()
 
     def _enter_chat_room(self, room_name):
-        self.driver.get(self.live_server_url + '/chat/')
+        self.driver.get(self.live_server_url + '/')
         ActionChains(self.driver).send_keys(room_name + '\n').perform()
         WebDriverWait(self.driver, 2).until(
             lambda _:
