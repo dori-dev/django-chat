@@ -22,8 +22,18 @@
         "ws://" + window.location.host + "/ws/chat/" + roomName + "/"
       );
 
+      chatSocket.onopen = function (e) {
+        chatSocket.send(
+          JSON.stringify({
+            command: "fetch_message",
+          })
+        );
+        document.querySelector("#chat-log").value = "";
+      };
+
       chatSocket.onmessage = function (e) {
         const data = JSON.parse(e.data);
+        console.log(data)
         document.querySelector("#chat-log").value += data.message + "\n";
       };
 
@@ -45,6 +55,7 @@
         chatSocket.send(
           JSON.stringify({
             message: message,
+            command: "new_message",
           })
         );
         messageInputDom.value = "";
