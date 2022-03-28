@@ -8,6 +8,7 @@ class Message(models.Model):
     author = models.ForeignKey(User, on_delete=models.CASCADE)
     content = models.TextField()
     timestamp = models.DateTimeField(auto_now_add=True)
+    room_name = models.CharField(default='welcome', max_length=256, null=False, blank=False)
 
     @staticmethod
     def last_messages():
