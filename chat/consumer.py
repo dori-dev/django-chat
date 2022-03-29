@@ -26,7 +26,12 @@ class ChatConsumer(WebsocketConsumer):
         content: bytes = self.message_serializer(query_set)
         messages: list = json.loads(content)
         for message in messages:
-            self.chat_message({"message": message['content']})
+            self.chat_message(
+                {
+                    "message": message['content'],
+                    "author": message['author_username']
+                }
+            )
 
     def message_serializer(self, query_set: QuerySet[Message]):
         serialized: list = MessageSerializer(query_set, many=True)
@@ -58,26 +63,28 @@ class ChatConsumer(WebsocketConsumer):
         command: str = text_data_dict['command']
         # execute the function according to the given `command`
         if command == 'new_message':
-            message: str = text_data_dict['message']
             self.new_message(text_data_dict)
-            self.send_to_room(message)
+            self.send_to_room(text_data_dict)
         elif command == 'fetch_message':
             room_name: str = text_data_dict['room_name']
             self.fetch_message(room_name)
         else:
             print(f'Invalid Command: "{command}"')
 
-    def send_to_room(self, message):
+    def send_to_room(self, text_data_dict):
         """send message to room group
 
         Args:
             message (str): message will send
         """
+        message: str = text_data_dict['message']
+        author: str = text_data_dict['username']
         async_to_sync(self.channel_layer.group_send)(
             self.room_group_name,
             {
                 'type': 'chat_message',
-                'message': message
+                'message': message,
+                'author': author,
             }
         )
 
@@ -87,8 +94,5 @@ class ChatConsumer(WebsocketConsumer):
         Args:
             event (dict): the event
         """
-        message: str = event['message']
         # send message to WebSocket
-        self.send(text_data=json.dumps({
-            'message': message
-        }))
+        self.send(text_data=json.dumps(event))

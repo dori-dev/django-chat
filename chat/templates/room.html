@@ -6,11 +6,91 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Chat Room</title>
+    <link
+      href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,600,700,300"
+      rel="stylesheet"
+      type="text/css"
+    />
+    <script src="https://use.typekit.net/hoy3lrg.js"></script>
+    <script>
+      try {
+        Typekit.load({ async: true });
+      } catch (e) {}
+    </script>
+    <!-- <link
+      rel="stylesheet prefetch"
+      href="https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css"
+    />
+    <link
+      rel="stylesheet prefetch"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.2/css/font-awesome.min.css"
+    />
+    <link
+      href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+      rel="stylesheet"
+      id="bootstrap-css"
+    />
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <link
+      href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css"
+      rel="stylesheet"
+      id="bootstrap-css"
+    />
+    <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
+    <script src="//code.jquery.com/jquery-1.11.1.min.js"></script> -->
+    <link rel="stylesheet" href="{% static 'style.css' %}" />
   </head>
   <body>
-    <textarea id="chat-log" cols="100" rows="20"></textarea><br />
+
+
+
+    <body>
+      <div id="frame">
+        <div class="content">
+          <div class="contact-profile">
+            <img src="" alt="" />
+            <p>{{ username }}</p>
+            <div class="social-media">
+              <i class="fa fa-facebook" aria-hidden="true"></i>
+              <i class="fa fa-twitter" aria-hidden="true"></i>
+              <i class="fa fa-instagram" aria-hidden="true"></i>
+            </div>
+          </div>
+          <div class="messages">
+            <ul id="chat-log">
+            </ul>
+          </div>
+          <div class="message-input">
+            <div class="wrap">
+              <input
+                id="chat-message-input"
+                type="text"
+                placeholder="Write your message..."
+              />
+              <i class="fa fa-paperclip attachment" aria-hidden="true" onclick="document.getElementById('inp').click();"></i>
+              
+  
+              <button id="chat-message-submit" class="submit">
+                <i class="fa fa-paper-plane" aria-hidden="true"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+  
+      <input id="inp" type='file' style="display:none" >
+      <p id="b64"></p>
+
+
+
+
+
+
+
+    <!-- <textarea id="chat-log" cols="100" rows="20"></textarea><br />
     <input id="chat-message-input" type="text" size="100" /><br />
-    <input id="chat-message-submit" type="button" value="Send" />
+    <input id="chat-message-submit" type="button" value="Send" /> -->
     {{ room_name|json_script:"room-name" }}
     <script src="{% static 'reconnecting-ws.js' %}"></script>
     <script>
@@ -31,13 +111,16 @@
             room_name: roomName,
           })
         );
-        document.querySelector("#chat-log").value = "";
+        document.getElementById("chat-log").innerHTML = "";
       };
 
       chatSocket.onmessage = function (e) {
         const data = JSON.parse(e.data);
-        document.querySelector("#chat-log").value += data.message + "\n";
+        createMessage(data)
       };
+
+
+
 
       chatSocket.onclose = function (e) {
         console.error("Chat socket closed unexpectedly");
@@ -64,6 +147,21 @@
         );
         messageInputDom.value = "";
       };
+
+      function createMessage(data) {
+        var author = data.author;
+        var messageListTag = document.createElement('li');
+        var imageTag = document.createElement('img');
+        var pTag = document.createElement('p');
+        pTag.textContent = data.message;
+        if (author === username) {
+          messageListTag.className = 'sent';
+        } else {
+          messageListTag.className = 'replies';
+        }
+        messageListTag.appendChild(pTag);
+        document.querySelector("#chat-log").appendChild(messageListTag);
+      }
     </script>
   </body>
 </html>
