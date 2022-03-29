@@ -1,23 +1,21 @@
 {% load static %}
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Chat Room</title>
-    <link
-      href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,600,700,300"
-      rel="stylesheet"
-      type="text/css"
-    />
-    <script src="https://use.typekit.net/hoy3lrg.js"></script>
-    <script>
-      try {
-        Typekit.load({ async: true });
-      } catch (e) {}
-    </script>
-    <!-- <link
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Chat Room</title>
+  <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,600,700,300" rel="stylesheet"
+    type="text/css" />
+  <script src="https://use.typekit.net/hoy3lrg.js"></script>
+  <script>
+    try {
+      Typekit.load({ async: true });
+    } catch (e) { }
+  </script>
+  <!-- <link
       rel="stylesheet prefetch"
       href="https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css"
     />
@@ -39,129 +37,119 @@
     />
     <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
     <script src="//code.jquery.com/jquery-1.11.1.min.js"></script> -->
-    <link rel="stylesheet" href="{% static 'style.css' %}" />
-  </head>
-  <body>
+  <link rel="stylesheet" href="{% static 'style.css' %}" />
+</head>
+
+<body>
+  <div id="frame">
+    <div class="content">
+      <div class="contact-profile">
+        <img src="" alt="" />
+        <p>{{ username }}</p>
+      </div>
+      <div class="messages">
+        <ul id="chat-log">
+        </ul>
+      </div>
+      <div class="message-input">
+        <div class="wrap" style="position: fixed; bottom: 10px; right: 10px;">
+          <input id="chat-message-input" type="text" placeholder="پیامت رو بنویس..." />
+          <i class="fa fa-paperclip attachment" aria-hidden="true"
+            onclick="document.getElementById('inp').click();"></i>
 
 
-
-    <body>
-      <div id="frame">
-        <div class="content">
-          <div class="contact-profile">
-            <img src="" alt="" />
-            <p>{{ username }}</p>
-            <div class="social-media">
-              <i class="fa fa-facebook" aria-hidden="true"></i>
-              <i class="fa fa-twitter" aria-hidden="true"></i>
-              <i class="fa fa-instagram" aria-hidden="true"></i>
-            </div>
-          </div>
-          <div class="messages">
-            <ul id="chat-log">
-            </ul>
-          </div>
-          <div class="message-input">
-            <div class="wrap">
-              <input
-                id="chat-message-input"
-                type="text"
-                placeholder="Write your message..."
-              />
-              <i class="fa fa-paperclip attachment" aria-hidden="true" onclick="document.getElementById('inp').click();"></i>
-              
-  
-              <button id="chat-message-submit" class="submit">
-                <i class="fa fa-paper-plane" aria-hidden="true"></i>
-              </button>
-            </div>
-          </div>
+          <button id="chat-message-submit" class="submit">
+            <!-- <i class="fa fa-paper-plane" aria-hidden="true"></i> -->
+            ارسال
+          </button>
         </div>
       </div>
-  
-      <input id="inp" type='file' style="display:none" >
-      <p id="b64"></p>
+    </div>
+  </div>
+
+  <!-- <input id="inp" type='file' style="display:none" >
+      <p id="b64"></p> -->
+
+  {{ room_name|json_script:"room-name" }}
+  <script src="{% static 'reconnecting-ws.js' %}"></script>
+  <script>
+    // window.scrollTo(0, document.body.scrollHeight);
+    const messages = document.getElementsByClassName("messages");
+    // messages.scrollTo(0, messages.scrollHeight);
+    // console.log(messages.scrollHeight)
 
 
+    // messages.scrollTop(messages.scrollHeight);
 
+    const roomName = JSON.parse(
+      document.getElementById("room-name").textContent
+    );
 
+    var username = {{ username }}
 
+    const chatSocket = new ReconnectingWebSocket(
+      "ws://" + window.location.host + "/ws/" + roomName + "/"
+    );
 
-
-    <!-- <textarea id="chat-log" cols="100" rows="20"></textarea><br />
-    <input id="chat-message-input" type="text" size="100" /><br />
-    <input id="chat-message-submit" type="button" value="Send" /> -->
-    {{ room_name|json_script:"room-name" }}
-    <script src="{% static 'reconnecting-ws.js' %}"></script>
-    <script>
-      const roomName = JSON.parse(
-        document.getElementById("room-name").textContent
+    chatSocket.onopen = function (e) {
+      chatSocket.send(
+        JSON.stringify({
+          command: "fetch_message",
+          room_name: roomName,
+        })
       );
+      document.getElementById("chat-log").innerHTML = "";
+    };
 
-      var username = {{ username }}
-
-      const chatSocket = new ReconnectingWebSocket(
-        "ws://" + window.location.host + "/ws/" + roomName + "/"
-      );
-
-      chatSocket.onopen = function (e) {
-        chatSocket.send(
-          JSON.stringify({
-            command: "fetch_message",
-            room_name: roomName,
-          })
-        );
-        document.getElementById("chat-log").innerHTML = "";
-      };
-
-      chatSocket.onmessage = function (e) {
-        const data = JSON.parse(e.data);
-        createMessage(data)
-      };
+    chatSocket.onmessage = function (e) {
+      const data = JSON.parse(e.data);
+      createMessage(data)
+    };
 
 
 
 
-      chatSocket.onclose = function (e) {
-        console.error("Chat socket closed unexpectedly");
-      };
+    chatSocket.onclose = function (e) {
+      console.error("Chat socket closed unexpectedly");
+    };
 
-      document.querySelector("#chat-message-input").focus();
-      document.querySelector("#chat-message-input").onkeyup = function (e) {
-        if (e.keyCode === 13) {
-          // enter, return
-          document.querySelector("#chat-message-submit").click();
-        }
-      };
-
-      document.querySelector("#chat-message-submit").onclick = function (e) {
-        const messageInputDom = document.querySelector("#chat-message-input");
-        const message = messageInputDom.value;
-        chatSocket.send(
-          JSON.stringify({
-            message: message,
-            command: "new_message",
-            username: username,
-            room_name: roomName,
-          })
-        );
-        messageInputDom.value = "";
-      };
-
-      function createMessage(data) {
-        var author = data.author;
-        var messageListTag = document.createElement('li');
-        var imageTag = document.createElement('img');
-        var pTag = document.createElement('p');
-        pTag.textContent = data.message;
-        if (author === username) {
-          messageListTag.className = 'sent';
-        } else {
-          messageListTag.className = 'replies';
-        }
-        messageListTag.appendChild(pTag);
-        document.querySelector("#chat-log").appendChild(messageListTag);
+    document.querySelector("#chat-message-input").focus();
+    document.querySelector("#chat-message-input").onkeyup = function (e) {
+      if (e.keyCode === 13) {
+        // enter, return
+        document.querySelector("#chat-message-submit").click();
       }
-    </script>
-  </body>
+    };
+
+    document.querySelector("#chat-message-submit").onclick = function (e) {
+      const messageInputDom = document.querySelector("#chat-message-input");
+      const message = messageInputDom.value;
+      chatSocket.send(
+        JSON.stringify({
+          message: message,
+          command: "new_message",
+          username: username,
+          room_name: roomName,
+        })
+      );
+      messageInputDom.value = "";
+    };
+
+    function createMessage(data) {
+      var author = data.author;
+      var messageListTag = document.createElement('li');
+      var imageTag = document.createElement('img');
+      var pTag = document.createElement('p');
+      pTag.textContent = data.message;
+      if (author === username) {
+        messageListTag.className = 'sent';
+      } else {
+        messageListTag.className = 'replies';
+      }
+      messageListTag.appendChild(pTag);
+      document.querySelector("#chat-log").appendChild(messageListTag);
+    }
+  </script>
+  </bod>
+
 </html>

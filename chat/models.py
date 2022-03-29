@@ -20,7 +20,5 @@ class Message(models.Model):
     def author_username(self):
         return self.author.username
 
-    # def room()
-
     def __str__(self):
-        return "message"  # TODO use chat_room and author, ....
+        return f'"{self.author}" message in the "{self.room_name}" room'

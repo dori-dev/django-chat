@@ -20,4 +20,6 @@ add popular room
 add last room 
 
 load and show more message if scroll up
+
+scroll to end of page and end of frame
 -->
