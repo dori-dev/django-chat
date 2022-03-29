@@ -32,7 +32,7 @@ class Message(models.Model):
     @staticmethod
     def last_messages(room_name: str):
         return Message.objects.filter(
-            room_name=room_name).order_by("-timestamp")[:32]
+            room_name=room_name).order_by("-timestamp")[:22]
 
     def author_username(self):
         return self.author.username

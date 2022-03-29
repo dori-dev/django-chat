@@ -1,0 +1,91 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="{% static 'auth.css' %}" />
+    <title>ثبت نام</title>
+  </head>
+  <body>
+    <div class="container" style="direction: rtl">
+      <h1 class="page-label">ثبت نام</h1>
+      <form class="auth-form" action="" method="post">
+        <div class="error">{{ form.errors }}</div>
+        {% csrf_token %}
+        <div class="input-container">
+          <label for="">نام کاربری</label>
+          <input
+            type="text"
+            class="form-control"
+            name="username"
+            maxlength="150"
+            autocapitalize="none"
+            autocomplete="username"
+            autofocus
+            required
+            id="id_username"
+            placeholder="یک نام کاربری برای خود مشخص کنید"
+          />
+          <span class="helptext">
+            <ul>
+              <li>
+                کمتر از 150 کاراکتر باشد و فقط شامل حروف، اعداد و علامات @ . + -
+                _ باشد.
+              </li>
+            </ul>
+          </span>
+        </div>
+        <div class="input-container">
+          <label for="">رمز عبور</label>
+          <input
+            type="password"
+            class="form-control"
+            name="password1"
+            autocomplete="new-password"
+            required
+            id="id_password1"
+            placeholder="یک رمز عبور برای خود وارد کنید"
+          />
+          <span class="helptext">
+            <ul>
+              <li>رمز عبور شما نمی تواند شبیه نام کاربری باشد.</li>
+              <li>رمز عبور شما باید حداقل از 8 حرف تشکیل شده باشد.</li>
+              <li>رمز عبور شما نباید یک گذرواژه آسان باشد.</li>
+              <li>رمز عبور شما نباید کاملا عدد باشد.</li>
+            </ul>
+          </span>
+        </div>
+        <div class="input-container">
+          <label for="">تکرار رمز عبور</label>
+          <input
+            type="password"
+            class="form-control"
+            name="password2"
+            autocomplete="new-password"
+            required="id"
+            ="id_password2"
+            placeholder="رمز عبور را دوباره تکرار کنید"
+          />
+          <span class="helptext">
+            <ur>
+              <li>برای تائید، رمز عبور قبلی را وارد کنید.</li>
+            </ur>
+          </span>
+        </div>
+        <button class="btn btn-primary auth-btn neighbor-btn">ثبت نام</button>
+        <div style="margin-top: 60px">
+          <h3 style="margin-bottom: 15px">
+            اگر حساب کاربری <b>دارید</b> وارد حساب تان شوید
+          </h3>
+          <a href="{% url 'accounts:login' %}">
+            <button type="button" class="btn btn-success large-btn">
+              ورود به حساب
+            </button>
+          </a>
+        </div>
+      </form>
+    </div>
+  </body>
+</html>
