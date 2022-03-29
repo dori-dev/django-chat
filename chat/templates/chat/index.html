@@ -20,6 +20,9 @@
       <a href=""><li>test</li></a>
     </ul>
     <h2>create your chat room</h2>
+    <h2>top room</h2>
+    <h2>last room</h2>
+    <h2>your room</h2>
     <script>
       document.querySelector("#room-name-input").focus();
       document.querySelector("#room-name-input").onkeyup = function (e) {
@@ -31,7 +34,7 @@
 
       document.querySelector("#room-name-submit").onclick = function (e) {
         var roomName = document.querySelector("#room-name-input").value;
-        window.location.pathname = "/" + roomName + "/";
+        window.location.pathname = "/chat/" + roomName + "/";
       };
     </script>
   </body>

@@ -2,7 +2,7 @@
 """
 from datetime import datetime
 from django.contrib import admin
-from .models import Message
+from .models import Message, Chat
 
 
 class MessageAdmin(admin.ModelAdmin):
@@ -16,3 +16,4 @@ class MessageAdmin(admin.ModelAdmin):
 
 
 admin.site.register(Message, MessageAdmin)
+admin.site.register(Chat)

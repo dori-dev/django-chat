@@ -2,6 +2,18 @@ from django.db import models
 from django.contrib.auth.models import User
 
 
+class Chat(models.Model):
+    room_name = models.CharField(
+        max_length=256,
+        null=False, blank=False)
+    members = models.ManyToManyField(
+        User,
+        blank=False)
+
+    def __str__(self):
+        return self.room_name
+
+
 class Message(models.Model):
     author = models.ForeignKey(User, on_delete=models.CASCADE)
     content = models.TextField()
