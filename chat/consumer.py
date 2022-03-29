@@ -24,7 +24,7 @@ class ChatConsumer(WebsocketConsumer):
     def fetch_message(self, room_name: str):
         query_set: QuerySet[Message] = Message.last_messages(room_name)
         content: bytes = self.message_serializer(query_set)
-        messages: list = json.loads(content)
+        messages: list = reversed(json.loads(content))
         for message in messages:
             self.chat_message(
                 {
@@ -63,6 +63,9 @@ class ChatConsumer(WebsocketConsumer):
         command: str = text_data_dict['command']
         # execute the function according to the given `command`
         if command == 'new_message':
+            message: str = text_data_dict['message']
+            if not message.strip():
+                return
             self.new_message(text_data_dict)
             self.send_to_room(text_data_dict)
         elif command == 'fetch_message':
