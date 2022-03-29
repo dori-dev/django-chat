@@ -22,4 +22,7 @@ add last room
 load and show more message if scroll up
 
 scroll to end of page and end of frame
+
+full test app
+full auto test for app
 -->
