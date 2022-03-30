@@ -21,19 +21,10 @@
         <div class="collapse navbar-collapse" id="navbarNav">
           <ul class="navbar-nav">
             <li class="nav-item">
-                <a class="nav-link active custom-nav" aria-current="page" href="{% url 'index' %}">ایجاد گروه</a>
+                <a class="nav-link active custom-nav" aria-current="page" href="{% url 'create' %}">ایجاد گروه</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link active custom-nav" aria-current="page" href="{% url 'index' %}">گروه های من</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link active custom-nav" aria-current="page" href="{% url 'index' %}">گروه های محبوب</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link active custom-nav" aria-current="page" href="{% url 'index' %}">آخرین گروه ها</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link active custom-nav" aria-current="page" href="{% url 'index' %}">رفتن به گروه</a>
+              <a class="nav-link active custom-nav" aria-current="page" href="{% url 'groups' %}">لیست گروه ها</a>
             </li>
             {% if user.is_authenticated %}
             <form action="{% url 'auth:logout' %}" method="post">

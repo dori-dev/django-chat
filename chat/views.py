@@ -41,3 +41,11 @@ def room(request: object, room_name: str):
         "username": mark_safe(json.dumps(username)),
     }
     return render(request, "chat/room.html", context)
+
+
+def group_list(request: object):
+    return render(request, "chat/group-list.html")
+
+
+def create_group(request: object):
+    return render(request, "chat/create-group.html")
