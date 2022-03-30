@@ -1,56 +1,41 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Chat Rooms</title>
-  </head>
-  <body>
-    What chat room would you like to enter?<br />
-    <input id="room-name-input" type="text" size="100" /><br />
-    <input id="room-name-submit" type="button" value="Enter" />
-    <h1>create your chat room</h1>
+{% extends 'chat/base.html' %} {% block title %}
+<title>گفتگو کن</title>
+{% endblock title %} {% block content %}
+<p>وارد گروهی که دوست داری بشو</p>
+<input
+  id="room-name-input"
+  type="text"
+  size="100"
+  placeholder="دوست داری وارد چه گروهی شوی؟"
+/><br />
+<input id="room-name-submit" type="button" value="Enter" />
+<h1>گروه خودت را بساز</h1>
 
-    {% if user.is_authenticated %}
+{% if user.is_authenticated %} {% if chat_rooms_length %}
+<h1>گروه های شما</h1>
+<ul>
+  {% for chat_room in chat_rooms %}
+  <a href="{% url 'index' %}{{ chat_room }}">
+    <li>{{ chat_room }}</li>
+  </a>
+  {% endfor %}
+</ul>
+{% endif %} {% endif %}
 
-    {% if chat_rooms_length %}
-    <h1>Your Group</h1>
-    <ul>
-      {% for chat_room in chat_rooms %}
-      <a href="{% url 'index' %}{{ chat_room }}">
-        <li>{{ chat_room }}</li>
-      </a>
-      {% endfor %}
-    </ul>
-    {% endif %}
-    <form action="{% url 'logout' %}" method="post">
-      {% csrf_token %}
-      <button>logout</button>
-    </form>
+<h1>برترین گروه ها</h1>
+<h1>آخرین گروه ها</h1>
+<script>
+  document.querySelector("#room-name-input").focus();
+  document.querySelector("#room-name-input").onkeyup = function (e) {
+    if (e.keyCode === 13) {
+      // enter, return
+      document.querySelector("#room-name-submit").click();
+    }
+  };
 
-    {% else %}
-    <a href="#">
-      <h1>login/register</h1>
-    </a>
-
-    {% endif %}
-
-    <h1>Top Group</h1>
-    <h1>Last Group</h1>
-    <script>
-      document.querySelector("#room-name-input").focus();
-      document.querySelector("#room-name-input").onkeyup = function (e) {
-        if (e.keyCode === 13) {
-          // enter, return
-          document.querySelector("#room-name-submit").click();
-        }
-      };
-
-      document.querySelector("#room-name-submit").onclick = function (e) {
-        var roomName = document.querySelector("#room-name-input").value;
-        window.location.pathname = "/chat/" + roomName + "/";
-      };
-    </script>
-  </body>
-</html>
+  document.querySelector("#room-name-submit").onclick = function (e) {
+    var roomName = document.querySelector("#room-name-input").value;
+    window.location.pathname = "/chat/" + roomName + "/";
+  };
+</script>
+{% endblock content %}

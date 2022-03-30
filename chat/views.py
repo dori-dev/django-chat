@@ -25,7 +25,7 @@ def index(request: object):
     return render(request, "chat/index.html", context)
 
 
-@login_required(login_url="login")
+@login_required(login_url="auth:register")
 def room(request: object, room_name: str):
     # TODO
     user = request.user
