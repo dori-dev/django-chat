@@ -55,10 +55,16 @@ def create_group(request: object):
 
 @login_required(login_url="auth:register")
 def group_view(request: object, room_id: str):
+    user = request.user
+    chat_model = Chat.objects.filter(room_id=room_id)
+    if chat_model.exists():
+        chat_model[0].members.add(user)
+    else:
+        return redirect("index")
     username = request.user.username
     context = {
         "room_id": room_id,
         "username": mark_safe(json.dumps(username)),
-        "name": request.user,
+        "name": user,
     }
     return render(request, "chat/room.html", context)

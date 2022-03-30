@@ -16,7 +16,7 @@ def register_view(request):
                 return redirect(request.POST.get('next'))
             return redirect("index")
 
-    else:
+    else:  # TODO remove else: not load last username eneter
         form = UserCreationForm()
     arg = {
         "form": form,
@@ -34,7 +34,7 @@ def login_view(request):
             if "next" in request.POST:
                 return redirect(request.POST.get('next'))
             return redirect("index")
-    else:
+    else:  # TODO remove else: not load last username eneter
         form = AuthenticationForm()
     arg = {
         "form": form,
