@@ -1,9 +1,22 @@
 """models of chat app
 """
+from random import random
 from typing import List
 from django.db.models.query import QuerySet
 from django.db import models
 from django.contrib.auth.models import User
+from django.utils.crypto import get_random_string
+
+
+def unique_string():
+    random_string: str = get_random_string(8)
+    all_room_id: QuerySet[Chat] = Chat.objects.all()
+    rooms_id = list(
+        map(lambda chat: chat.room_id, all_room_id))
+    while random_string in rooms_id:
+        random_string: str = get_random_string(8)
+        print(random_string)
+    return random_string
 
 
 class Chat(models.Model):
@@ -13,9 +26,15 @@ class Chat(models.Model):
         verbose_name="گروه")
     members = models.ManyToManyField(
         User,
-        blank=False)
+        blank=False,
+        verbose_name="اعضا")
     timestamp = models.DateTimeField(
         auto_now_add=True)
+    room_id = models.CharField(
+        default=unique_string,
+        unique=True,
+        editable=False,
+        max_length=8)
 
     @staticmethod
     def best_group() -> list:
@@ -43,6 +62,10 @@ class Chat(models.Model):
         chat_names = list(
             map(lambda chat: chat.name, chats))
         return chat_names
+
+    class Meta:
+        verbose_name_plural = "گروه ها"
+        verbose_name = "گروه"
 
     def __str__(self):
         return self.name
@@ -72,5 +95,6 @@ class Message(models.Model):
     def __str__(self):
         return f'پیام "{self.author}" در گروه "{self.room}"'
 
-
-# 'add', 'aggregate', 'alias', 'all', 'annotate', 'auto_created', 'bulk_create', 'bulk_update', 'check', 'clear', 'complex_filter', 'contains', 'contribute_to_class', 'core_filters', 'count', 'create', 'create_superuser', 'create_user', 'creation_counter', 'dates', 'datetimes', 'db', 'db_manager', 'deconstruct', 'defer', 'difference', 'distinct', 'do_not_call_in_templates', 'earliest', 'exclude', 'exists', 'explain', 'extra', 'filter', 'first', 'from_queryset', 'get', 'get_by_natural_key', 'get_or_create', 'get_prefetch_queryset', 'get_queryset', 'in_bulk', 'instance', 'intersection', 'iterator', 'last', 'latest', 'make_random_password', 'model', 'name', 'none', 'normalize_email', 'only', 'order_by', 'pk_field_names', 'prefetch_cache_name', 'prefetch_related', 'query_field_name', 'raw', 'related_val', 'remove', 'reverse', 'select_for_update', 'select_related', 'set', 'source_field', 'source_field_name', 'symmetrical', 'target_field', 'target_field_name', 'through', 'union', 'update', 'update_or_create', 'use_in_migrations', 'using', 'values', 'values_list', 'with_perm'
+    class Meta:
+        verbose_name_plural = "پیام ها"
+        verbose_name = "پیام"
