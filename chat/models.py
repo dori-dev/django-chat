@@ -39,7 +39,7 @@ class Chat(models.Model):
     @staticmethod
     def your_group(user) -> list:
         chats: QuerySet[Chat] = Chat.objects.filter(
-            members__username=user).order_by('-timestamp')
+            members__username=user).order_by('-members')
         chat_names = list(
             map(lambda chat: chat.name, chats))
         return chat_names

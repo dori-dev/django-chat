@@ -1,1 +1,37 @@
-groups
+{% extends 'chat/base.html' %}
+{% block title %}
+<title>لیست گروه ها</title>
+{% endblock title %}
+
+{% block content %}
+
+{% if user.is_authenticated %}
+{% if your_groups_len %}
+<h1>گروه های شما</h1>
+<ul>
+  {% for group_name in your_groups %}
+  <a href="{% url 'index' %}{{ group_name }}">
+    <li>{{ group_name }}</li>
+  </a>
+  {% endfor %}
+</ul>
+{% endif %} {% endif %}
+
+<h1>برترین گروه ها</h1>
+<ul>
+  {% for group_name in best_groups %}
+  <a href="{% url 'index' %}{{ group_name }}">
+    <li>{{ group_name }}</li>
+  </a>
+  {% endfor %}
+</ul>
+
+<h1>آخرین گروه ها</h1>
+<ul>
+  {% for group_name in last_groups %}
+  <a href="{% url 'index' %}{{ group_name }}">
+    <li>{{ group_name }}</li>
+  </a>
+  {% endfor %}
+</ul>
+{% endblock content %}
