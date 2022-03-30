@@ -15,7 +15,7 @@
       {% if request.GET.next %} {% if request.GET.next == "/list/" %}
       <h2 class="warning">
         برای دیدن "لیست کارها" ابتدا <b style="color: #0275d8">وارد</b> شوید یا
-        <a style="text-decoration: none" href="{% url 'accounts:register' %}"
+        <a style="text-decoration: none" href="{% url 'auth:register' %}"
           ><b style="color: #42ba96">ثبت نام</b></a
         >
         کنید
@@ -23,7 +23,7 @@
       {% else %} {% if request.GET.next == "/create/" %}
       <h2 class="warning">
         برای "ایجاد کار" ابتدا باید <b style="color: #0275d8">وارد</b> شوید یا
-        <a style="text-decoration: none" href="{% url 'accounts:register' %}"
+        <a style="text-decoration: none" href="{% url 'auth:register' %}"
           ><b style="color: #42ba96">ثبت نام</b></a
         >
         کنید
@@ -78,12 +78,12 @@
         {% if request.GET.next %}
         <input type="hidden" name="next" value="{{ request.GET.next }}" />
         {% endif %} {% csrf_token %}
-        <button class="btn btn-primary auth-btn neighbor-btn">ورود</button>
+        <button class="btn btn-primary auth-btn neighbor-btn large-btn">ورود</button>
         <div style="margin-top: 60px">
           <h3 style="margin-bottom: 15px">
             اگر حساب کاربری <b>ندارید</b> در سایت ثبت نام کنید
           </h3>
-          <a href="{% url 'accounts:register' %}">
+          <a href="{% url 'auth:register' %}">
             <button type="button" class="btn btn-success large-btn">
               ثبت نام در سایت
             </button>

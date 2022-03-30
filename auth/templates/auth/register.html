@@ -26,16 +26,8 @@
             autofocus
             required
             id="id_username"
-            placeholder="یک نام کاربری برای خود مشخص کنید"
+            placeholder="یک نام برای خود مشخص کنید"
           />
-          <span class="helptext">
-            <ul>
-              <li>
-                کمتر از 150 کاراکتر باشد و فقط شامل حروف، اعداد و علامات @ . + -
-                _ باشد.
-              </li>
-            </ul>
-          </span>
         </div>
         <div class="input-container">
           <label for="">رمز عبور</label>
@@ -46,16 +38,8 @@
             autocomplete="new-password"
             required
             id="id_password1"
-            placeholder="یک رمز عبور برای خود وارد کنید"
+            placeholder="برای خود رمز عبوری وارد کنید"
           />
-          <span class="helptext">
-            <ul>
-              <li>رمز عبور شما نمی تواند شبیه نام کاربری باشد.</li>
-              <li>رمز عبور شما باید حداقل از 8 حرف تشکیل شده باشد.</li>
-              <li>رمز عبور شما نباید یک گذرواژه آسان باشد.</li>
-              <li>رمز عبور شما نباید کاملا عدد باشد.</li>
-            </ul>
-          </span>
         </div>
         <div class="input-container">
           <label for="">تکرار رمز عبور</label>
@@ -66,20 +50,15 @@
             autocomplete="new-password"
             required="id"
             ="id_password2"
-            placeholder="رمز عبور را دوباره تکرار کنید"
+            placeholder="رمز عبور قبلی را دوباره تکرار کنید"
           />
-          <span class="helptext">
-            <ur>
-              <li>برای تائید، رمز عبور قبلی را وارد کنید.</li>
-            </ur>
-          </span>
         </div>
-        <button class="btn btn-primary auth-btn neighbor-btn">ثبت نام</button>
+        <button class="btn btn-primary auth-btn neighbor-btn large-btn">ثبت نام</button>
         <div style="margin-top: 60px">
           <h3 style="margin-bottom: 15px">
-            اگر حساب کاربری <b>دارید</b> وارد حساب تان شوید
+            اگر قبلا <b>ثبت نام کردید</b> وارد حساب تان شوید
           </h3>
-          <a href="{% url 'accounts:login' %}">
+          <a href="{% url 'auth:login' %}">
             <button type="button" class="btn btn-success large-btn">
               ورود به حساب
             </button>
