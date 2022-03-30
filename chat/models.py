@@ -1,6 +1,5 @@
 """models of chat app
 """
-from random import random
 from typing import List
 from django.db.models.query import QuerySet
 from django.db import models
@@ -84,8 +83,8 @@ class Message(models.Model):
         verbose_name="گروه")
 
     @staticmethod
-    def last_messages(room_name: str):
-        room = Chat.objects.get(name=room_name)
+    def last_messages(room_id: str):
+        room = Chat.objects.get(room_id=room_id)
         return Message.objects.filter(
             room=room).order_by("-timestamp")[:22]
 

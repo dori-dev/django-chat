@@ -15,7 +15,7 @@ class ChatConsumer(WebsocketConsumer):
 
     def new_message(self, data: dict):
         author = User.objects.get(username=data['username'])
-        room = Chat.objects.get(name=data['room_name'])
+        room = Chat.objects.get(room_id=data['room_name'])  # TODO
         # use `objects.create` because I just want `insert` message!
         Message.objects.create(
             author=author,
@@ -40,8 +40,8 @@ class ChatConsumer(WebsocketConsumer):
         return content
 
     def connect(self):
-        self.room_name: str = self.scope['url_route']['kwargs']['room_name']
-        self.room_group_name = f'chat_{self.room_name}'
+        self.room_id: str = self.scope['url_route']['kwargs']['room_id']
+        self.room_group_name = f'chat_{self.room_id}'
         # join room group
         async_to_sync(self.channel_layer.group_add)(
             self.room_group_name,

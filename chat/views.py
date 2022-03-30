@@ -1,9 +1,9 @@
 """chat views
 """
-from django.shortcuts import render
+from django.shortcuts import redirect, render
 from django.utils.safestring import mark_safe
 from django.contrib.auth.decorators import login_required
-# from django.utils.text import slugify  # TODO
+from django.utils.text import slugify
 import json
 from .models import Chat
 
@@ -23,9 +23,7 @@ def index(request: object):
 
 @login_required(login_url="auth:register")
 def room(request: object, room_name: str):
-    # print(f"<{slugify(room_name, allow_unicode=False)}>")  # TODO
-    # room_name = slugify(room_name, allow_unicode=False).replace("-", "")
-    # room_name == slugfy_name  TODO use id for room
+    room_name = slugify(room_name, allow_unicode=True)
     user = request.user
     chat_model = Chat.objects.filter(name=room_name)
     if chat_model.exists():
@@ -33,13 +31,9 @@ def room(request: object, room_name: str):
     else:
         chat = Chat.objects.create(name=room_name)
         chat.members.add(user)
-    username = request.user.username
-    context = {
-        "room_name": room_name,
-        "username": mark_safe(json.dumps(username)),
-        "name": request.user,
-    }
-    return render(request, "chat/room.html", context)
+    chat = Chat.objects.get(name=room_name)
+    room_id = chat.room_id
+    return redirect(f'/id/{room_id}')
 
 
 def group_list(request: object):
@@ -57,3 +51,14 @@ def group_list(request: object):
 
 def create_group(request: object):
     return render(request, "chat/create-group.html")
+
+
+@login_required(login_url="auth:register")
+def group_view(request: object, room_id: str):
+    username = request.user.username
+    context = {
+        "room_id": room_id,
+        "username": mark_safe(json.dumps(username)),
+        "name": request.user,
+    }
+    return render(request, "chat/room.html", context)

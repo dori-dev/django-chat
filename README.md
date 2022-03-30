@@ -27,4 +27,8 @@ full test app
 full auto test for app
 
 good style for chats
+
+use navbar for chat
+room label in top
+and use username, and time for each message
 -->
