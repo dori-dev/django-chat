@@ -12,21 +12,18 @@ def index(request: object):
     user = request.user
     context = {}
     if user.is_authenticated:
-        chats: QuerySet[Chat] = Chat.objects.filter(
-            members__username=user).order_by('-timestamp')
-        chat_names = list(
-            map(lambda chat: chat.name, chats)
-        )
+        your_groups = Chat.your_group(user)
         context = {
-            'chat_rooms': chat_names,
-            'chat_rooms_length': len(chat_names),
+            'your_groups': your_groups,
+            'your_groups_len': len(your_groups),
+            'best_groups': Chat.best_group(),
+            'last_groups': Chat.last_group(),
         }
     return render(request, "chat/index.html", context)
 
 
 @login_required(login_url="auth:register")
 def room(request: object, room_name: str):
-    # TODO
     user = request.user
     chat_model = Chat.objects.filter(name=room_name)
     if chat_model.exists():

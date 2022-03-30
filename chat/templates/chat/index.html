@@ -6,24 +6,39 @@
   id="room-name-input"
   type="text"
   size="100"
-  placeholder="دوست داری وارد چه گروهی شوی؟"
+  placeholder="اسم گروهی که میخواهی رو وارد کن!"
 /><br />
 <input id="room-name-submit" type="button" value="Enter" />
-<h1>گروه خودت را بساز</h1>
+<a href="{% url 'create' %}"><h2>گروه خودت را بساز</h2></a>
 
-{% if user.is_authenticated %} {% if chat_rooms_length %}
+{% if user.is_authenticated %} {% if your_groups_len %}
 <h1>گروه های شما</h1>
 <ul>
-  {% for chat_room in chat_rooms %}
-  <a href="{% url 'index' %}{{ chat_room }}">
-    <li>{{ chat_room }}</li>
+  {% for group_name in your_groups %}
+  <a href="{% url 'index' %}{{ group_name }}">
+    <li>{{ group_name }}</li>
   </a>
   {% endfor %}
 </ul>
 {% endif %} {% endif %}
 
 <h1>برترین گروه ها</h1>
+<ul>
+  {% for group_name in best_groups %}
+  <a href="{% url 'index' %}{{ group_name }}">
+    <li>{{ group_name }}</li>
+  </a>
+  {% endfor %}
+</ul>
+
 <h1>آخرین گروه ها</h1>
+<ul>
+  {% for group_name in last_groups %}
+  <a href="{% url 'index' %}{{ group_name }}">
+    <li>{{ group_name }}</li>
+  </a>
+  {% endfor %}
+</ul>
 <script>
   document.querySelector("#room-name-input").focus();
   document.querySelector("#room-name-input").onkeyup = function (e) {
