@@ -6,7 +6,7 @@ from asgiref.sync import async_to_sync
 from channels.generic.websocket import WebsocketConsumer
 from rest_framework.renderers import JSONRenderer
 from .serializers import MessageSerializer
-from .models import Message, User
+from .models import Chat, Message, User
 
 
 class ChatConsumer(WebsocketConsumer):
@@ -15,11 +15,12 @@ class ChatConsumer(WebsocketConsumer):
 
     def new_message(self, data: dict):
         author = User.objects.get(username=data['username'])
+        room = Chat.objects.get(name=data['room_name'])
         # use `objects.create` because I just want `insert` message!
         Message.objects.create(
             author=author,
             content=data['message'],
-            room_name=data['room_name'])
+            room=room)
 
     def fetch_message(self, room_name: str):
         query_set: QuerySet[Message] = Message.last_messages(room_name)

@@ -5,22 +5,21 @@ from django.shortcuts import render
 from django.utils.safestring import mark_safe
 from django.contrib.auth.decorators import login_required
 import json
-from .models import Message
-from .models import Chat  # TODO
+from .models import Chat
 
 
 def index(request: object):
     user = request.user
     context = {}
     if user.is_authenticated:
-        messages: QuerySet[Message] = Message.objects.filter(
-            author__username=user)  # TODO sort by last message in top
-        chat_rooms = set(
-            map(lambda message: message.room_name, messages)
+        chats: QuerySet[Chat] = Chat.objects.filter(
+            members__username=user).order_by('-timestamp')
+        chat_names = list(
+            map(lambda chat: chat.name, chats)
         )
         context = {
-            'chat_rooms': chat_rooms,
-            'chat_rooms_length': len(chat_rooms),
+            'chat_rooms': chat_names,
+            'chat_rooms_length': len(chat_names),
         }
     return render(request, "chat/index.html", context)
 
@@ -29,11 +28,11 @@ def index(request: object):
 def room(request: object, room_name: str):
     # TODO
     user = request.user
-    chat_model = Chat.objects.filter(room_name=room_name)
+    chat_model = Chat.objects.filter(name=room_name)
     if chat_model.exists():
-        chat_model[0].members.add()
+        chat_model[0].members.add(user)
     else:
-        chat = Chat.objects.create(room_name=room_name)
+        chat = Chat.objects.create(name=room_name)
         chat.members.add(user)
     username = request.user.username
     context = {

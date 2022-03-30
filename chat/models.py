@@ -1,41 +1,44 @@
+"""models of chat app
+"""
 from django.db import models
 from django.contrib.auth.models import User
 
 
 class Chat(models.Model):
-    room_name = models.CharField(
-        max_length=256,
-        null=False, blank=False)
-    members = models.ManyToManyField(  # TODO for `popular room` and `your room`
+    name = models.CharField(
+        default='welcome', max_length=256,
+        null=False, blank=False,
+        verbose_name="گروه")
+    members = models.ManyToManyField(
         User,
         blank=False)
-    # timestamp = models.DateTimeField(  # TODO for `last room`
-    #     auto_now_add=True)
+    timestamp = models.DateTimeField(
+        auto_now_add=True)
 
     def __str__(self):
-        return self.room_name
+        return self.name
 
 
 class Message(models.Model):
-    author = models.ForeignKey(User, on_delete=models.CASCADE)
-    content = models.TextField()
+    author = models.ForeignKey(
+        User, on_delete=models.CASCADE,
+        verbose_name="کاربر")
+    content = models.TextField(verbose_name="پیام")
     timestamp = models.DateTimeField(
         auto_now_add=True)
-    room_name = models.CharField(
-        default='welcome', max_length=256,
+    room = models.ForeignKey(
+        Chat, on_delete=models.CASCADE,
         null=False, blank=False,
-        verbose_name="room")
-    # room_name = models.ForeignKey(
-    #     Chat, on_delete=models.CASCADE,
-    #     null=False, blank=False)
+        verbose_name="گروه")
 
     @staticmethod
     def last_messages(room_name: str):
+        room = Chat.objects.get(name=room_name)
         return Message.objects.filter(
-            room_name=room_name).order_by("-timestamp")[:22]
+            room=room).order_by("-timestamp")[:22]
 
     def author_username(self):
         return self.author.username
 
     def __str__(self):
-        return f'"{self.author}" message in the "{self.room_name}" room'
+        return f'پیام "{self.author}" در گروه "{self.room}"'
