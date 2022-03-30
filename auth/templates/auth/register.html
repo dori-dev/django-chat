@@ -11,6 +11,22 @@
   <body>
     <div class="container" style="direction: rtl">
       <h1 class="page-label">ثبت نام</h1>
+
+      {% if request.GET.next %}
+      <h2 class="warning">
+        برای ادامه ابتدا
+        <a
+          style="text-decoration: none"
+          href="{% url 'auth:login' %}?next={{ request.GET.next }}"
+        >
+          <b style="color: #0275d8">وارد</b>
+        </a>
+        شوید یا
+        <b style="color: #42ba96">ثبت نام</b>
+        کنید
+      </h2>
+      {% endif %}
+
       <form class="auth-form" action="" method="post">
         <div class="error">{{ form.errors }}</div>
         {% csrf_token %}
@@ -53,7 +69,12 @@
             placeholder="رمز عبور قبلی را دوباره تکرار کنید"
           />
         </div>
-        <button class="btn btn-primary auth-btn neighbor-btn large-btn">ثبت نام</button>
+        {% if request.GET.next %}
+        <input type="hidden" name="next" value="{{ request.GET.next }}" />
+        {% endif %}
+        <button class="btn btn-primary auth-btn neighbor-btn large-btn">
+          ثبت نام
+        </button>
         <div style="margin-top: 60px">
           <h3 style="margin-bottom: 15px">
             اگر قبلا <b>ثبت نام کردید</b> وارد حساب تان شوید

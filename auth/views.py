@@ -12,7 +12,10 @@ def register_view(request):
         if form.is_valid():
             user = form.save()
             login(request, user)
+            if "next" in request.POST:
+                return redirect(request.POST.get('next'))
             return redirect("index")
+
     else:
         form = UserCreationForm()
     arg = {
