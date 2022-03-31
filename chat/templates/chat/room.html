@@ -54,10 +54,7 @@
       <div class="message-input">
         <div class="wrap" style="position: fixed; bottom: 10px; right: 10px;">
           <input id="chat-message-input" type="text" placeholder="پیامت رو بنویس..." />
-          <i class="fa fa-paperclip attachment" aria-hidden="true"
-            onclick="document.getElementById('inp').click();"></i>
-
-
+          <button onclick="document.getElementById('inp').click();">عکس</button>
           <button id="chat-message-submit" class="submit">
             <!-- <i class="fa fa-paper-plane" aria-hidden="true"></i> -->
             ارسال
@@ -67,8 +64,8 @@
     </div>
   </div>
 
-  <!-- <input id="inp" type='file' style="display:none" >
-      <p id="b64"></p> -->
+  <input id="inp" type='file' style="display: none;">
+  <p id="b64"></p>
 
   {{ room_id|json_script:"room-id" }}
   <script src="{% static 'reconnecting-ws.js' %}"></script>
@@ -98,9 +95,6 @@
       createMessage(data)
     };
 
-
-
-
     chatSocket.onclose = function (e) {
       console.error("Chat socket closed unexpectedly");
     };
@@ -129,18 +123,39 @@
 
     function createMessage(data) {
       var author = data.author;
+      var command = data.command;
       var messageListTag = document.createElement('li');
-      var imageTag = document.createElement('img');
-      var pTag = document.createElement('p');
-      pTag.textContent = data.message;
+      if (command === "send_image") {
+        var content = document.createElement('img');
+        content.src = data.message;
+      } else {
+        var content = document.createElement('p');
+        content.textContent = data.message;
+      }
       if (author === username) {
         messageListTag.className = 'sent';
       } else {
         messageListTag.className = 'replies';
       }
-      messageListTag.appendChild(pTag);
+      messageListTag.appendChild(content);
       document.querySelector("#chat-log").appendChild(messageListTag);
     }
+
+    function readFile() {
+      if (this.files && this.files[0]) {
+        var FR = new FileReader();
+        FR.addEventListener("load", function (e) {
+          chatSocket.send(JSON.stringify({
+            message: e.target.result,
+            command: 'send_image',
+            username: username,
+            room_name: roomID,
+          }))
+        });
+        FR.readAsDataURL(this.files[0]);
+      }
+    }
+    document.getElementById("inp").addEventListener("change", readFile);
   </script>
   </bod>
 

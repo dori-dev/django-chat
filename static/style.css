@@ -150,7 +150,8 @@ body {
   font-family: "proxima-nova", "Source Sans Pro", sans-serif;
   float: left;
   border: none;
-  width: calc(100% - 120px);
+  /* TODO */
+  width: calc(100% - 240px);
   margin: 0 0 10px 10px;
   height: 60px;
   padding: 11px 32px 10px 8px;
