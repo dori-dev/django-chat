@@ -13,15 +13,25 @@ class ChatConsumer(WebsocketConsumer):
     """chat consumer
     """
 
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.commands: dict = {
+            "new_message": "message",
+            "send_image": "image",
+            "message": "new_message",
+            "image": "send_image",
+        }
+
     def new_message(self, data: dict):
         author = User.objects.get(username=data['username'])
         room = Chat.objects.get(room_id=data['room_name'])
+        type = self.commands[data['command']]
         # use `objects.create` because I just want `insert` message!
         Message.objects.create(
             author=author,
             content=data['message'],
             room=room,
-            command=)
+            type=type)
 
     def fetch_message(self, room_name: str):
         query_set: QuerySet[Message] = Message.last_messages(room_name)
@@ -31,12 +41,13 @@ class ChatConsumer(WebsocketConsumer):
             self.chat_message(
                 {
                     "message": message['content'],
-                    "author": message['author_username']
+                    "author": message['author_username'],
+                    "command": self.commands[message['type']]
                 }
             )
 
     def send_image(self, data: dict):
-        # self.new_message(data)
+        self.new_message(data)
         self.send_to_room(data)
 
     def message_serializer(self, query_set: QuerySet[Message]):

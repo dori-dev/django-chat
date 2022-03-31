@@ -1,5 +1,6 @@
 """models of chat app
 """
+from email import message
 from typing import List
 from django.db.models.query import QuerySet
 from django.db import models
@@ -71,6 +72,10 @@ class Chat(models.Model):
 
 
 class Message(models.Model):
+    TYPES = (
+        ('message', 'پیام'),
+        ('image', 'عکس'),
+    )
     author = models.ForeignKey(
         User, on_delete=models.CASCADE,
         verbose_name="کاربر")
@@ -81,6 +86,11 @@ class Message(models.Model):
         Chat, on_delete=models.CASCADE,
         null=False, blank=False,
         verbose_name="گروه")
+    type = models.CharField(
+        max_length=32,
+        choices=TYPES,
+        default="message",
+        verbose_name="نوع")
 
     @staticmethod
     def last_messages(room_id: str):

@@ -124,6 +124,7 @@
     function createMessage(data) {
       var author = data.author;
       var command = data.command;
+      console.log(command)
       var messageListTag = document.createElement('li');
       if (command === "send_image") {
         var content = document.createElement('img');
