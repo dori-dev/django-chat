@@ -60,18 +60,19 @@
         if (data["members_list"][i] == username) {
           if (data["author"] != username) {
             if (data["room_id"] != roomID) {
-              if (!("Notification" in window)) {
-                alert("This browser does not support notification")
-              }
-              else if (Notification.permission === 'granted') {
-                var notification = new Notification(`${data["room_name"]}[${data["author"]}]: ${data["message"]}`)
-              }
-              else if (Notification.permission !== 'denied') {
-                Notification.requestPermission().then(function (permission) {
-                  if (permission === "granted") {
-                    // var notification = new Notification()
-                  }
-                })
+              if ("Notification" in window) {
+                var button = document.getElementById("notification-click")
+
+                if (Notification.permission === 'granted') {
+                  var notification = new Notification(`کاربر "${data["author"]}" در "${data["room_name"]}" نوشت: ${data["message"]}`)
+                }
+                else if (Notification.permission !== 'denied') {
+                  Notification.requestPermission().then(function (permission) {
+                    if (permission === "granted") {
+                      var notification = new Notification(`کاربر "${data["author"]}" در "${data["room_name"]}" نوشت: ${data["message"]}`)
+                    }
+                  })
+                }
               }
 
             }
