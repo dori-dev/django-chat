@@ -1,5 +1,6 @@
 """models of chat app
 """
+from datetime import datetime
 from typing import List
 from django.db.models.query import QuerySet
 from django.db import models
@@ -62,11 +63,22 @@ class Chat(models.Model):
 
     @staticmethod
     def your_group(user) -> list:
-        # TODO order by last message timestamp
         chats: QuerySet[Chat] = Chat.objects.filter(
-            members__username=user).order_by('-members')
+            members__username=user)
+        group_messages: List[tuple] = []
+        for chat in chats:
+            chat_name = chat.name
+            try:
+                last_message: Message = Message.objects.filter(
+                    room=chat).order_by("-timestamp")[0]
+            except IndexError:
+                continue
+            message_time: datetime = last_message.timestamp
+            group_messages.append((chat_name, message_time))
+        sorted_chats = sorted(group_messages, reverse=True,
+                              key=lambda data: data[1])
         chat_names = list(
-            map(lambda chat: chat.name, chats))
+            map(lambda chat: chat[0], sorted_chats))
         return remove_listener(chat_names)
 
     @staticmethod

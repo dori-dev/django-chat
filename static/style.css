@@ -1,6 +1,11 @@
+@font-face {
+  font-family: "IRAN Sans";
+  src: url("IRANSansWeb.woff2") format("woff2");
+}
+
 *,
-*::after,
-*::before {
+::after,
+::before {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
@@ -12,8 +17,7 @@ body {
   justify-content: center;
   min-height: 100vh;
   background: #27ae60;
-  /* TODO use iransans */
-  font-family: sans-serif;
+  font-family: "IRAN Sans", sans-serif;
   font-size: 1em;
   letter-spacing: 0.1px;
   color: #32465a;
@@ -151,7 +155,6 @@ body {
   font-family: "proxima-nova", "Source Sans Pro", sans-serif;
   float: left;
   border: none;
-  /* TODO */
   width: calc(100% - 240px);
   margin: 0 0 10px 10px;
   height: 60px;
