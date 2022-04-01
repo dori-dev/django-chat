@@ -46,17 +46,22 @@ class Chat(models.Model):
     def best_group() -> list:
         all_room: QuerySet[Chat] = Chat.objects.all().order_by('timestamp')
         rooms: List[tuple] = list(
-            map(lambda room: (room.name, room.members.count()), all_room))
-        sorted_rooms = sorted(
+            map(lambda room: (room.name,
+                              len(Message.objects.filter(room=room)),
+                              room.members.count()), all_room)
+        )
+        busy_rooms = sorted(
             rooms, key=lambda room: room[1], reverse=True)
+        sorted_rooms = sorted(
+            busy_rooms, key=lambda room: room[2], reverse=True)
         best_room = list(
-            map(lambda room: room[0], sorted_rooms[:8]))
+            map(lambda room: room[0], sorted_rooms[:7]))
         return remove_listener(best_room)
 
     @staticmethod
     def last_group() -> list:
         all_room: QuerySet[Chat] = Chat.objects.all().order_by(
-            "-timestamp")[:8]
+            "-timestamp")[:7]
         last_room = list(
             map(lambda room: room.name, all_room))
         return remove_listener(last_room)
@@ -80,6 +85,14 @@ class Chat(models.Model):
         chat_names = list(
             map(lambda chat: chat[0], sorted_chats))
         return remove_listener(chat_names)
+
+    @staticmethod
+    def all_groups() -> list:
+        all_group = Chat.objects.all()
+        groups = list(
+            map(lambda group: group.name, all_group)
+        )
+        return remove_listener(groups)
 
     @staticmethod
     def get_members_list(room_id: str):
