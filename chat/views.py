@@ -24,6 +24,8 @@ def index(request: object):
 @login_required(login_url="auth:register")
 def room(request: object, room_name: str):
     room_name = slugify(room_name, allow_unicode=True)
+    if room_name == "listener":
+        return redirect("/chat/listener2")
     user = request.user
     chat_model = Chat.objects.filter(name=room_name)
     if chat_model.exists():
@@ -55,6 +57,8 @@ def create_group(request: object):
 
 @login_required(login_url="auth:register")
 def group_view(request: object, room_id: str):
+    if room_id == "BFoULH5Z":
+        return redirect("/chat/listener2")
     user = request.user
     chat_model = Chat.objects.filter(room_id=room_id)
     if chat_model.exists():
@@ -66,5 +70,6 @@ def group_view(request: object, room_id: str):
         "room_id": room_id,
         "username": mark_safe(json.dumps(username)),
         "name": user,
+        "room": chat_model[0].name,
     }
     return render(request, "chat/room.html", context)

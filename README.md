@@ -31,4 +31,6 @@ good style for chats
 use navbar for chat
 room label in top
 and use username, and time for each message
+
+not showing notif when user in index
 -->

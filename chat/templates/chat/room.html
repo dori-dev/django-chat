@@ -7,36 +7,6 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Chat Room</title>
-  <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,600,700,300" rel="stylesheet"
-    type="text/css" />
-  <script src="https://use.typekit.net/hoy3lrg.js"></script>
-  <script>
-    try {
-      Typekit.load({ async: true });
-    } catch (e) { }
-  </script>
-  <!-- <link
-      rel="stylesheet prefetch"
-      href="https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css"
-    />
-    <link
-      rel="stylesheet prefetch"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.2/css/font-awesome.min.css"
-    />
-    <link
-      href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
-      rel="stylesheet"
-      id="bootstrap-css"
-    />
-    <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-    <link
-      href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css"
-      rel="stylesheet"
-      id="bootstrap-css"
-    />
-    <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
-    <script src="//code.jquery.com/jquery-1.11.1.min.js"></script> -->
   <link rel="stylesheet" href="{% static 'style.css' %}" />
 </head>
 
@@ -45,7 +15,7 @@
     <div class="content">
       <div class="contact-profile">
         <img src="" alt="" />
-        <p>{{ name }}</p>
+        <p>{{ name }} | {{ room }}</p>
       </div>
       <div class="messages">
         <ul id="chat-log">
@@ -79,6 +49,38 @@
     const chatSocket = new ReconnectingWebSocket(
       "ws://" + window.location.host + "/ws/id/" + roomID + "/"
     );
+
+    const chatSocket2 = new WebSocket(
+      "ws://" + window.location.host + "/ws/id/BFoULH5Z/"
+    );
+
+    chatSocket2.onmessage = function (e) {
+      var data = JSON.parse(e.data)
+      for (let i = data["members_list"].length - 1; i >= 0; i--) {
+        if (data["members_list"][i] == username) {
+          if (data["author"] != username) {
+            if (data["room_id"] != roomID) {
+              if (!("Notification" in window)) {
+                alert("This browser does not support notification")
+              }
+              else if (Notification.permission === 'granted') {
+                var notification = new Notification(`${data["room_name"]}[${data["author"]}]: ${data["message"]}`)
+              }
+              else if (Notification.permission !== 'denied') {
+                Notification.requestPermission().then(function (permission) {
+                  if (permission === "granted") {
+                    // var notification = new Notification()
+                  }
+                })
+              }
+
+            }
+          }
+        }
+      }
+    };
+
+
 
     chatSocket.onopen = function (e) {
       chatSocket.send(
@@ -124,7 +126,6 @@
     function createMessage(data) {
       var author = data.author;
       var command = data.command;
-      console.log(command)
       var messageListTag = document.createElement('li');
       if (command === "send_image") {
         var content = document.createElement('img');

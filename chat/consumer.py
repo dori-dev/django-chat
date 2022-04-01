@@ -23,6 +23,7 @@ class ChatConsumer(WebsocketConsumer):
         }
 
     def new_message(self, data: dict):
+        self.notification(data)
         author = User.objects.get(username=data['username'])
         room = Chat.objects.get(room_id=data['room_name'])
         type = self.commands[data['command']]
@@ -49,6 +50,21 @@ class ChatConsumer(WebsocketConsumer):
     def send_image(self, data: dict):
         self.new_message(data)
         self.send_to_room(data)
+
+    def notification(self, data: dict):
+        room: str = data['room_name']
+        members: list = Chat.get_members_list(room)
+        async_to_sync(self.channel_layer.group_send)(
+            "chat_BFoULH5Z",
+            {
+                'type': 'chat_message',
+                'message': data["message"],
+                'author': data["username"],
+                'room_id': room,
+                'members_list': members,
+                'room_name': Chat.objects.get(room_id=room).name
+            }
+        )
 
     def message_serializer(self, query_set: QuerySet[Message]):
         serialized: list = MessageSerializer(query_set, many=True)

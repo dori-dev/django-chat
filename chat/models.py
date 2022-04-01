@@ -1,6 +1,5 @@
 """models of chat app
 """
-from email import message
 from typing import List
 from django.db.models.query import QuerySet
 from django.db import models
@@ -17,6 +16,12 @@ def unique_string():
         random_string: str = get_random_string(8)
         print(random_string)
     return random_string
+
+
+def remove_listener(list_: list) -> list:
+    if "listener" in list_:
+        list_.remove("listener")
+    return list_
 
 
 class Chat(models.Model):
@@ -45,7 +50,7 @@ class Chat(models.Model):
             rooms, key=lambda room: room[1], reverse=True)
         best_room = list(
             map(lambda room: room[0], sorted_rooms[:8]))
-        return best_room
+        return remove_listener(best_room)
 
     @staticmethod
     def last_group() -> list:
@@ -53,15 +58,24 @@ class Chat(models.Model):
             "-timestamp")[:8]
         last_room = list(
             map(lambda room: room.name, all_room))
-        return last_room
+        return remove_listener(last_room)
 
     @staticmethod
     def your_group(user) -> list:
+        # TODO order by last message timestamp
         chats: QuerySet[Chat] = Chat.objects.filter(
             members__username=user).order_by('-members')
         chat_names = list(
             map(lambda chat: chat.name, chats))
-        return chat_names
+        return remove_listener(chat_names)
+
+    @staticmethod
+    def get_members_list(room_id: str):
+        room: Chat = Chat.objects.get(room_id=room_id)
+        members = list(
+            map(lambda user: user.username, room.members.all())
+        )
+        return members
 
     class Meta:
         verbose_name_plural = "گروه ها"
