@@ -1,5 +1,6 @@
 """chat views
 """
+from django.core.paginator import Paginator
 from django.shortcuts import redirect, render
 from django.utils.safestring import mark_safe
 from django.contrib.auth.decorators import login_required
@@ -39,8 +40,12 @@ def room(request: object, room_name: str):
 
 
 def group_list(request: object):
+    all_groups = Chat.all_groups()
+    paginator = Paginator(all_groups, 16)
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
     context = {
-        'all_groups': Chat.all_groups(),
+        'page_obj': page_obj,
     }
     return render(request, "chat/group-list.html", context)
 

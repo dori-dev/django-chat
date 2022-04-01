@@ -55,13 +55,13 @@ class Chat(models.Model):
         sorted_rooms = sorted(
             busy_rooms, key=lambda room: room[2], reverse=True)
         best_room = list(
-            map(lambda room: room[0], sorted_rooms[:7]))
+            map(lambda room: room[0], sorted_rooms[:8]))
         return remove_listener(best_room)
 
     @staticmethod
     def last_group() -> list:
         all_room: QuerySet[Chat] = Chat.objects.all().order_by(
-            "-timestamp")[:7]
+            "-timestamp")[:8]
         last_room = list(
             map(lambda room: room.name, all_room))
         return remove_listener(last_room)
