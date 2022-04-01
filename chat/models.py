@@ -88,7 +88,7 @@ class Chat(models.Model):
 
     @staticmethod
     def all_groups() -> list:
-        all_group = Chat.objects.all()
+        all_group = Chat.objects.all().order_by("-timestamp")
         groups = list(
             map(lambda group: group.name, all_group)
         )

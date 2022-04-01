@@ -9,6 +9,7 @@ from .models import Message, Chat
 class MessageAdmin(admin.ModelAdmin):
     list_display = ("author", "message", "time", "room")
     list_filter = ("author", "room", "timestamp")
+    search_fields = ("content",)
 
     def time(self, model: Message):
         date: datetime = model.timestamp.astimezone()
@@ -28,6 +29,7 @@ class MessageAdmin(admin.ModelAdmin):
 class ChatAdmin(admin.ModelAdmin):
     list_display = ("name", "members_count", "messages", "time")
     list_filter = ("members", "timestamp")
+    search_fields = ("name",)
 
     def members_count(self, model: Chat):
         return model.members.count()
