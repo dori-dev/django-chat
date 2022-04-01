@@ -4,9 +4,7 @@
 <p>وارد گروهی که دوست داری بشو</p>
 <input id="room-name-input" type="text" size="100" placeholder="اسم گروهی که میخواهی رو وارد کن!" /><br />
 <input id="room-name-submit" type="button" value="Enter" />
-<a href="{% url 'create' %}">
-  <h2>گروه خودت را بساز</h2>
-</a>
+
 
 {% if user.is_authenticated %} {% if your_groups_len %}
 <h1>گروه های شما</h1>

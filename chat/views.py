@@ -39,15 +39,9 @@ def room(request: object, room_name: str):
 
 
 def group_list(request: object):
-    user = request.user
     context = {
-        'best_groups': Chat.best_group(),
-        'last_groups': Chat.last_group(),
+        'all_groups': Chat.all_groups(),
     }
-    if user.is_authenticated:
-        your_groups = Chat.your_group(user)
-        context["your_groups"] = your_groups
-        context["your_groups_len"] = len(your_groups)
     return render(request, "chat/group-list.html", context)
 
 
