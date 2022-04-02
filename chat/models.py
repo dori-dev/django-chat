@@ -1,6 +1,7 @@
 """models of chat app
 """
 from datetime import datetime
+from tabnanny import verbose
 from typing import List
 from django.db.models.query import QuerySet
 from django.db import models
@@ -35,7 +36,8 @@ class Chat(models.Model):
         blank=False,
         verbose_name="اعضا")
     timestamp = models.DateTimeField(
-        auto_now_add=True)
+        auto_now_add=True,
+        verbose_name="زمان")
     room_id = models.CharField(
         default=unique_string,
         unique=True,
@@ -103,8 +105,8 @@ class Chat(models.Model):
         return members
 
     class Meta:
-        verbose_name_plural = "گروه ها"
-        verbose_name = "گروه"
+        verbose_name_plural = "چت ها"
+        verbose_name = "چت"
 
     def __str__(self):
         return self.name
@@ -120,7 +122,8 @@ class Message(models.Model):
         verbose_name="کاربر")
     content = models.TextField(verbose_name="پیام")
     timestamp = models.DateTimeField(
-        auto_now_add=True)
+        auto_now_add=True,
+        verbose_name="زمان")
     room = models.ForeignKey(
         Chat, on_delete=models.CASCADE,
         null=False, blank=False,
