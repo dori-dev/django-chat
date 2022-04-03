@@ -9,6 +9,11 @@ import json
 from .models import Chat
 
 
+def create_pagination(current_page: int, pages_number: int) -> list:
+    print(type(current_page))
+    print(type(pages_number))
+
+
 def index(request: object):
     user = request.user
     context = {
@@ -41,11 +46,13 @@ def room(request: object, room_name: str):
 
 def group_list(request: object):
     all_groups = Chat.all_groups()
-    paginator = Paginator(all_groups, 16)
+    paginator = Paginator(all_groups, 24)
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
+    pages = create_pagination(page_obj.number, page_obj.paginator.num_pages)
     context = {
         'page_obj': page_obj,
+        'pages': pages,
     }
     return render(request, "chat/group-list.html", context)
 

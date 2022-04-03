@@ -10,30 +10,79 @@
 {% endblock title %}
 
 {% block content %}
-<h1>لیست تمام گروه ها</h1>
+<h1 style="margin-top: 20px;">لیست تمام گروه ها</h1>
 <ul>
   {% for group_name in page_obj %}
   <a href="{% url 'index' %}{{ group_name }}">
-    <li>{{ group_name }}</li>
+    <li class="btn btn-outline-secondary all-group-btn">{{ group_name }}</li>
   </a>
   {% endfor %}
 </ul>
 
-<div class="pagination" >
+
+<div class="pagination">
   <span class="step-links">
-    {% if page_obj.has_previous %}
-    <a href="?page=1">&laquo; اولین</a>
-    <a href="?page={{ page_obj.previous_page_number }}">قبلی</a>
-    {% endif %}
 
     <span class="current">
       Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
     </span>
 
-    {% if page_obj.has_next %}
-    <a href="?page={{ page_obj.next_page_number }}">بعدی</a>
-    <a href="?page={{ page_obj.paginator.num_pages }}">آخرین &raquo;</a>
-    {% endif %}
   </span>
 </div>
+
+<nav aria-label="...">
+  <ul class="pagination">
+    {% if page_obj.has_previous %}
+    <li class="page-item">
+      <a class="page-link" href="?page={{ page_obj.previous_page_number }}">قبلی</a>
+    </li>
+    {% else %}
+    <li class="page-item disabled">
+      <span class="page-link">قبلی</span>
+    </li>
+    {% endif %}
+
+
+    {% if page_obj.has_previous and page_obj.has_next %}
+    <li class="page-item"><a class="page-link" href="?page={{ page_obj.number|add:-1 }}">{{ page_obj.number|add:-1 }}</a></li>
+    <li class="page-item active">
+      <span class="page-link">{{ page_obj.number }}</span>
+    </li>
+    <li class="page-item"><a class="page-link" href="?page={{ page_obj.number|add:1 }}">{{ page_obj.number|add:1 }}</a></li>
+    {% endif %}
+
+    {% if page_obj.has_previous and not page_obj.has_next %}
+    <li class="page-item"><a class="page-link" href="?page={{ page_obj.number|add:-2 }}">{{ page_obj.number|add:-2 }}</a></li>
+    <li class="page-item"><a class="page-link" href="?page={{ page_obj.number|add:-1 }}">{{ page_obj.number|add:-1 }}</a></li>
+    <li class="page-item active">
+      <span class="page-link">{{ page_obj.number }}</span>
+    </li>
+    {% endif %}
+
+    {% if not page_obj.has_previous and page_obj.has_next %}
+    <li class="page-item active">
+      <span class="page-link">{{ page_obj.number }}</span>
+    <li class="page-item"><a class="page-link" href="?page={{ page_obj.number|add:1 }}">{{ page_obj.number|add:1 }}</a></li>
+    <li class="page-item"><a class="page-link" href="?page={{ page_obj.number|add:2 }}">{{ page_obj.number|add:2 }}</a></li>
+    </li>
+    {% endif %}
+
+    {% if not page_obj.has_previous and not page_obj.has_next %}
+    <li class="page-item active">
+      <span class="page-link">{{ page_obj.number }}</span>
+    </li>
+    {% endif %}
+
+    {% if page_obj.has_next %}
+    <li class="page-item">
+      <a class="page-link" href="?page={{ page_obj.next_page_number }}">بعدی</a>
+    </li>
+    {% else %}
+    <li class="page-item disabled">
+      <span class="page-link">بعدی</span>
+    </li>
+    {% endif %}
+  </ul>
+</nav>
+
 {% endblock content %}
