@@ -28,7 +28,7 @@ def remove_listener(list_: list) -> list:
 
 class Chat(models.Model):
     name = models.CharField(
-        default='welcome', max_length=256,
+        default='welcome', max_length=512,
         null=False, blank=False,
         verbose_name="گروه")
     members = models.ManyToManyField(

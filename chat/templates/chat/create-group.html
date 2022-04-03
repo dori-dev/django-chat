@@ -10,10 +10,13 @@
 <title>گفتگو کن</title>
 {% endblock title %}
 {% block content %}
-<p>نامی برای گروه ات انتخاب کن</p>
-<input id="room-name-input" type="text" size="100" placeholder="نام گروه..." /><br />
-<p>اگر گروهی با این نام وجود داشته باشد وارد گروه میشوی!</p>
-<input id="room-name-submit" type="button" value="Enter" />
+
+<div class="search">
+  <h3 class="hint">یک اسم برای گروه ات بزار</h3>
+  <input class="form-control group-input" id="room-name-input" type="text" size="100"
+    placeholder="اسم گروه رو اینجا بنویس" /><br />
+  <input class="btn btn-primary submit-btn" id="room-name-submit" type="button" value="بزن بریم" />
+</div>
 <script>
   document.querySelector("#room-name-input").focus();
   document.querySelector("#room-name-input").onkeyup = function (e) {

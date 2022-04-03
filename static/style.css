@@ -1,7 +1,40 @@
 ul li {
-    display: block;
+  display: block;
 }
 
 ul a {
-    text-decoration: none;
+  text-decoration: none;
+}
+
+.search {
+  margin-top: 20px;
+  margin-right: 10px;
+}
+
+.title {
+  margin-top: 60px;
+  margin-right: 10px;
+}
+
+.hint {
+  margin-top: 30px;
+}
+
+.submit-btn {
+  font-size: larger;
+  margin-top: -10px;
+}
+
+.group-input {
+  max-width: 600px;
+  font-size: large;
+}
+
+.custom-btn {
+  margin: 10px;
+}
+
+.all-group-btn {
+  font-size: large;
+  margin: 10px;
 }
