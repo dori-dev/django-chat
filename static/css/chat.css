@@ -7,58 +7,34 @@ body {
   margin-top: 20px;
   background: #eee;
   font-family: "IRAN Sans", sans-serif;
+  margin: 0;
 }
 
-.row.row-broken {
-  padding-bottom: 0;
+.chat-label {
+  overflow: hidden;
+  background-color: #333;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 10;
 }
 
-.col-inside-lg {
-  padding: 20px;
-}
-
-.chat {
-  height: calc(100vh - 180px);
-}
-
-.decor-default {
-  background-color: #ffffff;
-}
-
-.chat-users h6 {
-  font-size: 20px;
-  margin: 0 0 20px;
-}
-
-.chat-users .user {
-  position: relative;
-  padding: 0 0 0 50px;
+.chat-label a {
+  float: right;
   display: block;
-  cursor: pointer;
-  margin: 0 0 20px;
+  color: #f2f2f2;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+  font-size: 17px;
 }
 
-.chat-users .user .name {
-  font-size: 14px;
-  font-weight: bold;
-  line-height: 20px;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
-.chat-users .user .mood {
-  font: 200 14px/20px "Raleway", sans-serif;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+.chat-label a:hover {
+  background: #ddd;
+  color: black;
 }
 
 /*****************CHAT BODY *******************/
-.chat-body h6 {
-  font-size: 20px;
-  margin: 0 0 20px;
-}
 
 .chat-body .answer.left {
   padding: 0 0 0 58px;
@@ -73,15 +49,25 @@ body {
   clear: both;
 }
 
+.chat-body .answer:nth-child(1) {
+  margin-top: 70px;
+}
+
 .chat-body .answer .name {
   font-size: 14px;
   line-height: 36px;
 }
 
 .chat-body .answer.left .text {
-  background: #d4d4d4;
-  color: #333333;
+  background: #00b894;
+  color: #fff;
   border-radius: 8px 8px 8px 0;
+}
+
+.chat-body .answer.left .text:before {
+  left: -30px;
+  border-right-color: #00b894;
+  border-right-width: 12px;
 }
 
 .chat-body .answer .text {
@@ -89,12 +75,6 @@ body {
   font-size: 16px;
   line-height: 26px;
   position: relative;
-}
-
-.chat-body .answer.left .text:before {
-  left: -30px;
-  border-right-color: #ebebeb;
-  border-right-width: 12px;
 }
 
 .chat-body .answer .text:before {
@@ -127,14 +107,14 @@ body {
 }
 
 .chat-body .answer.right .text {
-  background: #7266ba;
-  color: #ffffff;
+  background: #0984e3;
+  color: #fff;
   border-radius: 8px 8px 0 8px;
 }
 
 .chat-body .answer.right .text:before {
   right: -30px;
-  border-left-color: #7266ba;
+  border-left-color: #0984e3;
   border-left-width: 12px;
 }
 
@@ -142,4 +122,77 @@ body {
   padding-right: 12px;
   color: #333333;
   direction: ltr;
+}
+
+.message-input {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  z-index: 99;
+}
+
+.message-input {
+  position: relative;
+}
+
+.message-input input {
+  direction: rtl;
+  font-family: "IRAN Sans", sans-serif;
+  float: left;
+  border: none;
+  width: calc(100% - 340px);
+  margin: 0 0 10px 10px;
+  height: 60px;
+  padding: 5px 16px 5px 4px;
+  font-size: 1.3em;
+  border-top-left-radius: 30px;
+  border-bottom-left-radius: 30px;
+  color: #32465a;
+}
+
+@media screen and (max-width: 735px) {
+  .message-input input {
+    padding: 15px 32px 16px 8px;
+  }
+}
+
+.message-input input:focus {
+  outline: none;
+}
+
+.message-input .send-msg {
+  margin: 0 10px 10px 0;
+  border: none;
+  width: 100px;
+  height: 60px;
+  border-top-right-radius: 30px;
+  border-bottom-right-radius: 30px;
+  cursor: pointer;
+  font-size: 1.8em;
+  background: #636e72;
+  color: #f5f5f5;
+}
+.message-input .send-img {
+  margin: 0 0 10px 0;
+  border: none;
+  width: 100px;
+  height: 60px;
+  cursor: pointer;
+  font-size: 1.8em;
+  background: #636e72;
+  color: #f5f5f5;
+}
+
+@media screen and (max-width: 735px) {
+  .message-input button {
+    padding: 21px 0;
+  }
+}
+
+.message-input button:hover {
+  background: #2d3436;
+}
+
+.message-input button:focus {
+  outline: none;
 }
