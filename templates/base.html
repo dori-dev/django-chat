@@ -6,6 +6,7 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="shortcut icon" href="{% static 'favicon.ico' %}" type="image/x-icon">
   <link rel="stylesheet" href="{% static 'bootstrap.css' %}">
   <link rel="stylesheet" href="{% static 'base.css' %}">
   {% block style %}
@@ -15,9 +16,10 @@
 </head>
 
 <body style="zoom: 100%;">
-  <nav style="font-size: 20px; direction: rtl;" class="navbar navbar-expand-lg navbar-light bg-light">
+  <nav class="navbar navbar-expand-lg navbar-light"
+    style="background-color: #e4e9eb;font-size: 20px; direction: rtl;">
     <div class="container-fluid">
-      <a style="font-size: 30px;" class="navbar-brand" href="{% url 'index' %}">صفحه اصلی</a>
+      <a style="font-size: 30px;" class="navbar-brand" href="{% url 'index' %}">چتگرام</a>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
         aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>

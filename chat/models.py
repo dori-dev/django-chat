@@ -1,7 +1,6 @@
 """models of chat app
 """
 from datetime import datetime
-from tabnanny import verbose
 from typing import List
 from django.db.models.query import QuerySet
 from django.db import models

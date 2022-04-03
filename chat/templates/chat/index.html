@@ -6,7 +6,7 @@
 {% endblock style %}
 
 {% block title %}
-<title>گفتگو کن</title>
+<title>چتگرام</title>
 {% endblock title %}
 {% block content %}
 <div class="search">
@@ -27,7 +27,7 @@
 </ul>
 {% endif %} {% endif %}
 
-<h1 class="title">داغ ترین گروه ها</h1>
+<h1 class="title">داغ ترین گروه ها 🔥</h1>
 <ul>
   {% for group_name in best_groups %}
   <a href="{% url 'index' %}{{ group_name }}">
@@ -36,7 +36,7 @@
   {% endfor %}
 </ul>
 
-<h1 class="title">آخرین گروه ها</h1>
+<h1 class="title">آخرین گروه ها 🆕</h1>
 <ul>
   {% for group_name in last_groups %}
   <a href="{% url 'index' %}{{ group_name }}">
