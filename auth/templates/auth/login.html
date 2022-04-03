@@ -1,92 +1,75 @@
-{% load static %}
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="{% static 'auth.css' %}" />
-    <title>ورود</title>
-  </head>
-  <body>
-    <div class="container" style="direction: rtl">
-      <h1 class="page-label">ورود</h1>
-      {% if request.GET.next %}
-      <h2 class="warning">
-        برای ادامه ابتدا
-        <b style="color: #0275d8">وارد</b>
-        شوید یا
-        <a
-          style="text-decoration: none"
-          href="{% url 'auth:register' %}?next={{ request.GET.next }}"
-        >
-          <b style="color: #42ba96">ثبت نام</b>
-        </a>
-        کنید
-      </h2>
-      {% endif %}
-      <form class="auth-form" action="" method="post">
-        {% if form.errors %}
-        <div class="error">
-          <ul class="errorlist">
-            <li>
-              <ul class="errorlist">
-                <li>
-                  لطفا یک نام کاربری و رمز عبور صحیح وارد کنید. به حروف کوچک و
-                  بزرگ توجه کنید.
-                </li>
-              </ul>
-            </li>
-          </ul>
-        </div>
-        {% else %}
-        <div class="error"></div>
-        {% endif %}
+{% extends 'base.html' %}
 
-        <div class="input-container">
-          <label for="">نام کاربری</label>
-          <input
-            type="text"
-            autofocus
-            autocapitalize="none"
-            autocomplete="username"
-            class="form-control"
-            name="username"
-            maxlength="150"
-            required
-            id="id_username"
-            placeholder="نام کاربری خود را وارد کنید"
-          />
-        </div>
-        <div class="input-container">
-          <label for="">رمز عبور</label>
-          <input
-            class="form-control"
-            type="password"
-            name="password"
-            autocomplete="current-password"
-            required
-            id="id_password"
-            placeholder="رمز عبور خود را وارد کنید"
-          />
-        </div>
-        {% if request.GET.next %}
-        <input type="hidden" name="next" value="{{ request.GET.next }}" />
-        {% endif %} {% csrf_token %}
-        <button class="btn btn-primary auth-btn neighbor-btn large-btn">
-          ورود
-        </button>
-        <div style="margin-top: 60px">
-          <h3 style="margin-bottom: 15px">
-            اگر حساب کاربری <b>ندارید</b> در سایت ثبت نام کنید
-          </h3>
-          <a href="{% url 'auth:register' %}">
-            <button type="button" class="btn btn-success large-btn">
-              ثبت نام در سایت
-            </button>
-          </a>
-        </div>
-      </form>
-    </div>
-  </body>
-</html>
+{% load static %}
+
+{% block style %}
+<link rel="stylesheet" href="{% static 'auth.css' %}" />
+{% endblock style %}
+
+{% block title %}
+<title>ورود</title>
+{% endblock title %}
+
+
+
+{% block content %}
+
+
+<h1 class="page-label">ورود</h1>
+{% if request.GET.next %}
+<h2 class="warning">
+  برای ادامه ابتدا
+  <b style="color: #0275d8">وارد</b>
+  شوید یا
+  <a style="text-decoration: none" href="{% url 'auth:register' %}?next={{ request.GET.next }}">
+    <b style="color: #42ba96">ثبت نام</b>
+  </a>
+  کنید
+</h2>
+{% endif %}
+<form class="auth-form" action="" method="post">
+  {% if form.errors %}
+  <div class="error">
+    <ul class="errorlist">
+      <li>
+        <ul class="errorlist">
+          <li>
+            لطفا یک نام کاربری و رمز عبور صحیح وارد کنید. به حروف کوچک و
+            بزرگ توجه کنید.
+          </li>
+        </ul>
+      </li>
+    </ul>
+  </div>
+  {% else %}
+  <div class="error"></div>
+  {% endif %}
+
+  <div class="input-container">
+    <label for="">نام کاربری</label>
+    <input type="text" autofocus autocapitalize="none" autocomplete="username" class="form-control" name="username"
+      maxlength="150" required id="id_username" placeholder="نام کاربری خود را وارد کنید" />
+  </div>
+  <div class="input-container">
+    <label for="">رمز عبور</label>
+    <input class="form-control" type="password" name="password" autocomplete="current-password" required
+      id="id_password" placeholder="رمز عبور خود را وارد کنید" />
+  </div>
+  {% if request.GET.next %}
+  <input type="hidden" name="next" value="{{ request.GET.next }}" />
+  {% endif %} {% csrf_token %}
+  <button class="btn btn-primary auth-btn neighbor-btn large-btn">
+    ورود
+  </button>
+  <div style="margin-top: 60px">
+    <h3 style="margin-bottom: 15px">
+      اگر حساب کاربری <b>ندارید</b> در سایت ثبت نام کنید
+    </h3>
+    <a href="{% url 'auth:register' %}">
+      <button type="button" class="btn btn-success large-btn">
+        ثبت نام در سایت
+      </button>
+    </a>
+  </div>
+</form>
+{% endblock content %}

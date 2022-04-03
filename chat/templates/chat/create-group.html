@@ -1,6 +1,15 @@
-{% extends 'chat/base.html' %} {% block title %}
+{% extends 'base.html' %}
+{% load static %}
+
+{% block style %}
+<link rel="stylesheet" href="{% static 'style.css' %}">
+{% endblock style %}
+  
+
+{% block title %}
 <title>گفتگو کن</title>
-{% endblock title %} {% block content %}
+{% endblock title %}
+{% block content %}
 <p>نامی برای گروه ات انتخاب کن</p>
 <input
   id="room-name-input"

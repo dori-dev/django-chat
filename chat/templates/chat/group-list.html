@@ -1,4 +1,10 @@
-{% extends 'chat/base.html' %}
+{% extends 'base.html' %}
+{% load static %}
+
+{% block style %}
+<link rel="stylesheet" href="{% static 'style.css' %}">
+{% endblock style %}
+
 {% block title %}
 <title>لیست گروه ها</title>
 {% endblock title %}
