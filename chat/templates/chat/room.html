@@ -3,8 +3,7 @@
 {% load static %}
 
 {% block style %}
-<link rel="stylesheet" href="{% static 'chat.css' %}" />
-
+<link rel="stylesheet" href="{% static 'css/chat.css' %}" />
 {% endblock style %}
 
 {% block title %}
@@ -13,7 +12,6 @@
 
 
 {% block content %}
-
 
 <div id="frame">
   <div class="content">
@@ -42,7 +40,7 @@
 <p id="b64"></p>
 
 {{ room_id|json_script:"room-id" }}
-<script src="{% static 'reconnecting-ws.js' %}"></script>
+<script src="{% static 'js/reconnecting-ws.js' %}"></script>
 <script>
   const roomID = JSON.parse(
     document.getElementById("room-id").textContent
