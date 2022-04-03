@@ -53,6 +53,9 @@
 
   document.querySelector("#room-name-submit").onclick = function (e) {
     var roomName = document.querySelector("#room-name-input").value;
+    if (roomName === "") {
+      var roomName = "welcome"
+    }
     window.location.pathname = "/chat/" + roomName + "/";
   };
 </script>

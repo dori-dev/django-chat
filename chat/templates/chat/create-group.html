@@ -4,19 +4,14 @@
 {% block style %}
 <link rel="stylesheet" href="{% static 'style.css' %}">
 {% endblock style %}
-  
+
 
 {% block title %}
 <title>گفتگو کن</title>
 {% endblock title %}
 {% block content %}
 <p>نامی برای گروه ات انتخاب کن</p>
-<input
-  id="room-name-input"
-  type="text"
-  size="100"
-  placeholder="نام گروه..."
-/><br />
+<input id="room-name-input" type="text" size="100" placeholder="نام گروه..." /><br />
 <p>اگر گروهی با این نام وجود داشته باشد وارد گروه میشوی!</p>
 <input id="room-name-submit" type="button" value="Enter" />
 <script>
@@ -30,6 +25,9 @@
 
   document.querySelector("#room-name-submit").onclick = function (e) {
     var roomName = document.querySelector("#room-name-input").value;
+    if (roomName === "") {
+      var roomName = "welcome"
+    }
     window.location.pathname = "/chat/" + roomName + "/";
   };
 </script>
