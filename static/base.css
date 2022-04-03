@@ -3,15 +3,6 @@
   src: url("assets/IRANSansWeb.woff2") format("woff2");
 }
 
-/* TODO */
-/* *,
-::after,
-::before {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-} */
-
 body {
   font-family: "IRAN Sans", sans-serif;
 }

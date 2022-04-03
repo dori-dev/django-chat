@@ -1,40 +1,38 @@
-{% extends 'base.html' %}
-
 {% load static %}
+<!DOCTYPE html>
+<html lang="en" style="zoom: 100%;">
 
-{% block style %}
-<link rel="stylesheet" href="{% static 'css/chat.css' %}" />
-{% endblock style %}
-
-{% block title %}
-<title>{{ room }} - چتگرام</title>
-{% endblock title %}
-
-
-{% block content %}
-
-<div id="frame">
-  <div class="content">
-    <div class="contact-profile">
-      <img src="" alt="" />
-      <p>{{ name }} | {{ room }}</p>
-    </div>
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="shortcut icon" href="{% static 'assets/favicon.ico' %}" type="image/x-icon">
+  <link rel="stylesheet" href="{% static 'css/chat.css' %}" />
+  <title>{{ room }} - چتگرام</title>
+</head>
+<div class="container" style="direction: rtl;">
+  <ul class="chat-label">
+    <a href="/chat/{{ room }}">
+      <li>{{ room }}</li>
+    </a>
+    <a href="{% url 'index' %}">
+      <li>بازگشت</li>
+    </a>
+  </ul>
+  <div class="chat-body">
     <div class="messages">
-      <ul id="chat-log">
-      </ul>
     </div>
-    <div class="message-input">
-      <div class="wrap" style="position: fixed; bottom: 10px; right: 10px;">
-        <input id="chat-message-input" type="text" placeholder="پیامت رو بنویس..." />
-        <button onclick="document.getElementById('inp').click();">عکس</button>
-        <button id="chat-message-submit" class="submit">
-          <!-- <i class="fa fa-paper-plane" aria-hidden="true"></i> -->
-          ارسال
-        </button>
-      </div>
+    <div class="message-input" style="position: fixed; bottom: 10px; right: 10px;">
+      <input id="chat-message-input" type="text" placeholder="پیامت رو بنویس..." />
+      <button onclick="document.getElementById('inp').click();">عکس</button>
+      <button id="chat-message-submit" class="submit">
+        <!-- <i class="fa fa-paper-plane" aria-hidden="true"></i> -->
+        ارسال
+      </button>
     </div>
   </div>
 </div>
+
 
 <input id="inp" type='file' accept="image/*" style="display: none;">
 <p id="b64"></p>
@@ -42,10 +40,7 @@
 {{ room_id|json_script:"room-id" }}
 <script src="{% static 'js/reconnecting-ws.js' %}"></script>
 <script>
-  const roomID = JSON.parse(
-    document.getElementById("room-id").textContent
-  );
-
+  const roomID = JSON.parse(document.getElementById("room-id").textContent);
   var username = {{ username }}
 
   const chatSocket = new ReconnectingWebSocket(
@@ -57,33 +52,33 @@
   );
 
   chatSocket2.onmessage = function (e) {
-    var data = JSON.parse(e.data)
+    var data = JSON.parse(e.data);
     for (let i = data["members_list"].length - 1; i >= 0; i--) {
       if (data["members_list"][i] == username) {
         if (data["author"] != username) {
           if (data["room_id"] != roomID) {
             if ("Notification" in window) {
-              var button = document.getElementById("notification-click")
+              var button = document.getElementById("notification-click");
 
-              if (Notification.permission === 'granted') {
-                var notification = new Notification(`کاربر "${data["author"]}" در "${data["room_name"]}" نوشت: ${data["message"]}`)
-              }
-              else if (Notification.permission !== 'denied') {
+              if (Notification.permission === "granted") {
+                var notification = new Notification(
+                  `کاربر "${data["author"]}" در "${data["room_name"]}" نوشت: ${data["message"]}`
+                );
+              } else if (Notification.permission !== "denied") {
                 Notification.requestPermission().then(function (permission) {
                   if (permission === "granted") {
-                    var notification = new Notification(`کاربر "${data["author"]}" در "${data["room_name"]}" نوشت: ${data["message"]}`)
+                    var notification = new Notification(
+                      `کاربر "${data["author"]}" در "${data["room_name"]}" نوشت: ${data["message"]}`
+                    );
                   }
-                })
+                });
               }
             }
-
           }
         }
       }
     }
   };
-
-
 
   chatSocket.onopen = function (e) {
     chatSocket.send(
@@ -92,12 +87,12 @@
         room_name: roomID,
       })
     );
-    document.getElementById("chat-log").innerHTML = "";
+    document.getElementsByClassName("messages").innerHTML = "";
   };
 
   chatSocket.onmessage = function (e) {
     const data = JSON.parse(e.data);
-    createMessage(data)
+    createMessage(data);
   };
 
   chatSocket.onclose = function (e) {
@@ -126,40 +121,59 @@
     messageInputDom.value = "";
   };
 
+  // TODO
+  // <div class="time">14:15 PM</div>
+
   function createMessage(data) {
     var author = data.author;
     var command = data.command;
-    var messageListTag = document.createElement('li');
+    var message = document.createElement("div");
+    var messageAuthor = document.createElement("div");
+    messageAuthor.className = "name";
+    messageAuthor.textContent = author;
+    message.appendChild(messageAuthor);
     if (command === "send_image") {
-      var content = document.createElement('img');
+      var content = document.createElement("img");
+      // TODO change class name
+      content.className = "follan";
       content.src = data.message;
     } else {
-      var content = document.createElement('p');
+      var content = document.createElement("div");
+      content.className = "text";
       content.textContent = data.message;
     }
     if (author === username) {
-      messageListTag.className = 'sent';
+      message.className = "answer right";
     } else {
-      messageListTag.className = 'replies';
+      message.className = "answer left";
     }
-    messageListTag.appendChild(content);
-    document.querySelector("#chat-log").appendChild(messageListTag);
+    message.appendChild(content);
+    var messageTime = document.createElement("div");
+    messageTime.className = "time";
+    messageTime.textContent = "14:50 PM";
+    message.appendChild(messageTime);
+    document.querySelector(".messages").appendChild(message);
   }
 
   function readFile() {
     if (this.files && this.files[0]) {
       var FR = new FileReader();
       FR.addEventListener("load", function (e) {
-        chatSocket.send(JSON.stringify({
-          message: e.target.result,
-          command: 'send_image',
-          username: username,
-          room_name: roomID,
-        }))
+        chatSocket.send(
+          JSON.stringify({
+            message: e.target.result,
+            command: "send_image",
+            username: username,
+            room_name: roomID,
+          })
+        );
       });
       FR.readAsDataURL(this.files[0]);
     }
   }
   document.getElementById("inp").addEventListener("change", readFile);
+
 </script>
-{% endblock content %}
+</body>
+
+</html>
