@@ -1,16 +1,21 @@
 @font-face {
-    font-family: "IRAN Sans";
-    src: url("IRANSansWeb.woff2") format("woff2");
-  }
-  
-  *,
-  ::after,
-  ::before {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-  }
-  
-  body {
-    font-family: "IRAN Sans", sans-serif;
-  }
+  font-family: "IRAN Sans";
+  src: url("IRANSansWeb.woff2") format("woff2");
+}
+
+/* TODO */
+/* *,
+::after,
+::before {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+} */
+
+body {
+  font-family: "IRAN Sans", sans-serif;
+}
+
+.custom-nav {
+  margin-left: 3px;
+}

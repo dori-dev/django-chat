@@ -1,16 +1,3 @@
-@font-face {
-  font-family: "IRAN Sans";
-  src: url("IRANSansWeb.woff2") format("woff2");
-}
-
-*,
-::after,
-::before {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-
 body {
   background-color: white;
   color: black;
@@ -19,39 +6,6 @@ body {
 }
 
 /* Base Style */
-
-.container {
-  width: 100%;
-  padding-right: var(--bs-gutter-x, 0.75rem);
-  padding-left: var(--bs-gutter-x, 0.75rem);
-  margin-right: auto;
-  margin-left: auto;
-}
-@media (min-width: 576px) {
-  .container {
-    max-width: 540px;
-  }
-}
-@media (min-width: 768px) {
-  .container {
-    max-width: 720px;
-  }
-}
-@media (min-width: 992px) {
-  .container {
-    max-width: 960px;
-  }
-}
-@media (min-width: 1200px) {
-  .container {
-    max-width: 1140px;
-  }
-}
-@media (min-width: 1400px) {
-  .container {
-    max-width: 1320px;
-  }
-}
 
 label {
   display: inline-block;
@@ -234,16 +188,6 @@ h3 {
   margin-left: 10px;
 }
 
-.helptext,
-.helptext ul {
-  margin-top: 5px;
-  color: #181717;
-  font-size: 15px;
-  direction: rtl;
-  display: block;
-  list-style-type: none;
-}
-
 .errorlist li {
   font-size: 0px;
 }
@@ -277,10 +221,6 @@ h3 {
 
 .large-btn {
   font-size: 22px;
-}
-
-.custom-nav {
-  margin-left: 3px;
 }
 
 .warning {
