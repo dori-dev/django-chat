@@ -27,10 +27,11 @@ class ChatConsumer(WebsocketConsumer):
         author = User.objects.get(username=data['username'])
         room = Chat.objects.get(room_id=data['room_name'])
         type = self.commands[data['command']]
+        content: str = data['message']
         # use `objects.create` because I just want `insert` message!
         message: Message = Message.objects.create(
             author=author,
-            content=data['message'],
+            content=content.strip(),
             room=room,
             type=type)
         return message.get_time()

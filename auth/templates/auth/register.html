@@ -44,12 +44,12 @@
   <div class="input-container">
     <label for="">تکرار رمز عبور</label>
     <input type="password" class="form-control" name="password2" autocomplete="new-password"
-      required="id"="id_password2" placeholder="رمز عبور قبلی را دوباره تکرار کنید" />
+      required id="id_password2" placeholder="رمز عبور قبلی را دوباره تکرار کنید" />
   </div>
   {% if request.GET.next %}
   <input type="hidden" name="next" value="{{ request.GET.next }}" />
   {% endif %}
-  <button class="btn btn-primary auth-btn neighbor-btn large-btn">
+  <button id="register" class="btn btn-primary auth-btn neighbor-btn large-btn">
     ثبت نام
   </button>
   <div style="margin-top: 60px">
