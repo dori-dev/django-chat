@@ -13,7 +13,6 @@ copy "chromedriver" binary file in env/bin/ path!
 python manage.py test
 
 full test app
-full auto test for app
 good style for chats
 optimize css,js,html codes
 optimize scroll(just scroll in last message at the fetch_message)
