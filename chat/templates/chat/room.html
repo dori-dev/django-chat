@@ -52,7 +52,7 @@
   <p id="b64"></p>
 
   {{ room_id|json_script:"room-id" }}
-  <script src="{% static 'js/reconnecting-ws.js' %}"></script>
+  <script src="{% static 'js/reconnecting_ws.js' %}"></script>
   <script>
     const roomID = JSON.parse(document.getElementById("room-id").textContent);
     var username = {{ username }}
@@ -135,13 +135,10 @@
       messageInputDom.value = "";
     };
 
-    // TODO
-    // <div class="time">14:15 PM</div>
-
     function createMessage(data) {
       var author = data.author;
       var command = data.command;
-      console.log(data.aaa);
+      var time = data.time;
       var message = document.createElement("div");
       var messageAuthor = document.createElement("div");
       messageAuthor.className = "name";
@@ -164,7 +161,7 @@
       message.appendChild(content);
       var messageTime = document.createElement("div");
       messageTime.className = "time";
-      messageTime.textContent = "14:50 PM";
+      messageTime.textContent = time;
       message.appendChild(messageTime);
       document.querySelector(".messages").appendChild(message);
       if (command === "send_image") {
