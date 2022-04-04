@@ -142,6 +142,12 @@ class Message(models.Model):
     def author_username(self):
         return self.author.username
 
+    def get_time(self):
+        time = datetime.strftime(
+            self.timestamp.astimezone(),
+            "%I:%M %p")
+        return time
+
     def __str__(self):
         return f'پیام "{self.author}" در گروه "{self.room}"'
 

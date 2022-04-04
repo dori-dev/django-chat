@@ -1,7 +1,7 @@
 """chat consumer
 """
-from django.db.models.query import QuerySet
 import json
+from django.db.models.query import QuerySet
 from asgiref.sync import async_to_sync
 from channels.generic.websocket import WebsocketConsumer
 from rest_framework.renderers import JSONRenderer
@@ -28,11 +28,12 @@ class ChatConsumer(WebsocketConsumer):
         room = Chat.objects.get(room_id=data['room_name'])
         type = self.commands[data['command']]
         # use `objects.create` because I just want `insert` message!
-        Message.objects.create(
+        message: Message = Message.objects.create(
             author=author,
             content=data['message'],
             room=room,
             type=type)
+        return message.get_time()
 
     def fetch_message(self, room_name: str):
         query_set: QuerySet[Message] = Message.last_messages(room_name)
@@ -43,19 +44,16 @@ class ChatConsumer(WebsocketConsumer):
                 {
                     "message": message['content'],
                     "author": message['author_username'],
-                    "command": self.commands[message['type']]
+                    "command": self.commands[message['type']],
+                    "time": message['time'],
                 }
             )
-
-    def send_image(self, data: dict):
-        self.new_message(data)
-        self.send_to_room(data)
 
     def notification(self, data: dict):
         room: str = data['room_name']
         members: list = Chat.get_members_list(room)
         async_to_sync(self.channel_layer.group_send)(
-            "chat_BFoULH5Z",
+            "chat_BFoULH5Z",  # TODO dynamic this url
             {
                 'type': 'chat_message',
                 'message': data["message"],
@@ -99,13 +97,16 @@ class ChatConsumer(WebsocketConsumer):
             message: str = data_dict['message']
             if not message.strip():
                 return
-            self.new_message(data_dict)
+            time = self.new_message(data_dict)
+            data_dict['time'] = time
             self.send_to_room(data_dict)
         elif command == 'fetch_message':
             room_name: str = data_dict['room_name']
             self.fetch_message(room_name)
         elif command == 'send_image':
-            self.send_image(data_dict)
+            time = self.new_message(data_dict)
+            data_dict['time'] = time
+            self.send_to_room(data_dict)
         else:
             print(f'Invalid Command: "{command}"')
 
@@ -118,6 +119,7 @@ class ChatConsumer(WebsocketConsumer):
         message: str = data['message']
         author: str = data['username']
         command: str = data.get("command", "new_message")
+        time: str = data['time']
         async_to_sync(self.channel_layer.group_send)(
             self.room_group_name,
             {
@@ -125,6 +127,7 @@ class ChatConsumer(WebsocketConsumer):
                 'message': message,
                 'author': author,
                 'command': command,
+                'time': time,
             }
         )
 
