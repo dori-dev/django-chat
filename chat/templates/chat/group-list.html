@@ -47,9 +47,13 @@
     {% endif %}
 
     {% if page_obj.has_previous and not page_obj.has_next %}
+
+    {% if page_obj.number|add:-2 > 0 %}
     <li class="page-item">
       <a class="page-link" href="?page={{ page_obj.number|add:-2 }}">{{ page_obj.number|add:-2 }}</a>
     </li>
+    {% endif %}
+
     <li class="page-item">
       <a class="page-link" href="?page={{ page_obj.number|add:-1 }}">{{ page_obj.number|add:-1 }}</a>
     </li>
@@ -64,9 +68,13 @@
     <li class="page-item">
       <a class="page-link" href="?page={{ page_obj.number|add:1 }}">{{ page_obj.number|add:1 }}</a>
     </li>
+
+    {% if page_obj.paginator.num_pages >= page_obj.number|add:2 %}
     <li class="page-item">
       <a class="page-link" href="?page={{ page_obj.number|add:2 }}">{{ page_obj.number|add:2 }}</a>
     </li>
+    {% endif %}
+
     </li>
     {% endif %}
 
