@@ -4,7 +4,6 @@
 }
 
 body {
-  margin-top: 20px;
   background: #eee;
   font-family: "IRAN Sans", sans-serif;
   margin: 0;
@@ -43,11 +42,10 @@ body {
 
 .chat-label a:hover {
   background: #5c5c5c;
-  /* color: black; */
 }
 
 .chat-body .answer.left {
-  padding: 0 0 0 58px;
+  padding: 0 0 0 25px;
   text-align: left;
   float: left;
 }
@@ -59,12 +57,16 @@ body {
   clear: both;
 }
 
-.chat-body .answer:nth-child(1) {
+.chat-body .answer:first-child {
   margin-top: 70px;
+}
+.chat-body .answer:last-child {
+  margin-bottom: 100px;
 }
 
 .chat-body .answer .name {
-  font-size: 14px;
+  margin-top: 10px;
+  font-size: 15px;
   line-height: 36px;
 }
 
@@ -97,7 +99,7 @@ body {
 }
 
 .chat-body .answer.left .time {
-  padding-left: 12px;
+  padding-right: 10px;
   color: #333333;
   direction: ltr;
 }
@@ -109,9 +111,8 @@ body {
   padding-bottom: 1px;
 }
 
-/*RIGHT*/
 .chat-body .answer.right {
-  padding: 0 58px 0 0;
+  padding: 0 25px 0 0;
   text-align: right;
   float: right;
 }
@@ -129,13 +130,12 @@ body {
 }
 
 .chat-body .answer.right .time {
-  padding-right: 12px;
+  padding-left: 10px;
   color: #333333;
   direction: ltr;
 }
 
 .message-input {
-
   bottom: 0;
   width: 100%;
   z-index: 99;
@@ -186,4 +186,15 @@ body {
 
 .message-input button:focus {
   outline: none;
+}
+
+.image {
+  max-width: 50%;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.image:hover {
+  opacity: 0.7;
 }

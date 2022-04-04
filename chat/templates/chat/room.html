@@ -56,7 +56,6 @@
   <script>
     const roomID = JSON.parse(document.getElementById("room-id").textContent);
     var username = {{ username }}
-
     const chatSocket = new ReconnectingWebSocket(
       "ws://" + window.location.host + "/ws/id/" + roomID + "/"
     );
@@ -107,7 +106,7 @@
     chatSocket.onmessage = function (e) {
       const data = JSON.parse(e.data);
       createMessage(data);
-      window.scrollTo(0, document.body.scrollHeight)
+      window.scrollTo(0, document.body.scrollHeight);
     };
 
     chatSocket.onclose = function (e) {
@@ -142,6 +141,7 @@
     function createMessage(data) {
       var author = data.author;
       var command = data.command;
+      console.log(data.aaa);
       var message = document.createElement("div");
       var messageAuthor = document.createElement("div");
       messageAuthor.className = "name";
@@ -149,8 +149,7 @@
       message.appendChild(messageAuthor);
       if (command === "send_image") {
         var content = document.createElement("img");
-        // TODO change class name
-        content.className = "follan";
+        content.className = "image";
         content.src = data.message;
       } else {
         var content = document.createElement("div");
@@ -168,6 +167,9 @@
       messageTime.textContent = "14:50 PM";
       message.appendChild(messageTime);
       document.querySelector(".messages").appendChild(message);
+      if (command === "send_image") {
+        window.scrollTo(0, document.body.scrollHeight);
+      }
     }
 
     function readFile() {
