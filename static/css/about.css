@@ -1,0 +1,28 @@
+body {
+  font-size: 19px;
+}
+
+h1 {
+  margin: 30px 10px 40px 0;
+}
+
+a {
+  color: #007bff;
+  text-decoration: none;
+  background-color: transparent;
+  -webkit-text-decoration-skip: objects;
+  text-decoration: none;
+}
+
+a:visited,
+a:hover {
+  color: #0056b3;
+  text-decoration: underline;
+}
+
+.about p {
+  margin: 7px 25px 0 0;
+}
+.social p {
+  margin: 10px 25px 0 0;
+}

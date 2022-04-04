@@ -72,3 +72,7 @@ def group_view(request: object, room_id: str):
         "room": chat_model[0].name,
     }
     return render(request, "chat/room.html", context)
+
+
+def about(request: object):
+    return render(request, "chat/about.html")

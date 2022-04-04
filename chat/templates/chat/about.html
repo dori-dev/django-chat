@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+{% load static %}
+
+
+{% block style %}
+<link rel="stylesheet" href="{% static 'css/about.css' %}">
+{% endblock style %}
+
+
+{% block title %}
+<title>درباره من</title>
+{% endblock title %}
+
+
+{% block content %}
+<h1>درباره من</h1>
+<div class="about">
+    <p>سلام، من <b>محمد دری</b> ام سازنده <a href="{% url 'index' %}">نیوچت</a></p>
+    <p>به <a href="{% url 'index' %}">نیوچت</a> خوش اومدی :)</p>
+    <p>امیدوارم که از <a href="{% url 'index' %}">نیوچت</a> لذت ببری!</p>
+    <!-- TODO -->
+    <p><a target="_blank" href="">آشنایی بیشتر با پیامرسان نیوچت</a></p>
+</div>
+<br>
+<div class="social">
+    <p><a target="_blank" href="https://github.com/dori-dev">محمد دری</a> 2022</p>
+    <p>تلفن <a href="tel:09013128010">09013128010</a></p>
+    <p>ایمیل <a href="mailto:mr.dori.dev@gmail.com">mr.dori.dev@gmail.com</a></p>
+    <p>گیت هاب <a target="_blank" href="https://github.com/dori-dev">github.com/dori-dev</a></p>
+
+</div>
+{% endblock content %}
