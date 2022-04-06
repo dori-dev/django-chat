@@ -12,7 +12,5 @@ install webdriver for test codes https://chromedriver.chromium.org/
 copy "chromedriver" binary file in env/bin/ path!
 python manage.py test
 
-full test app
-good style for chats
-customize bootstrap
+
 -->
