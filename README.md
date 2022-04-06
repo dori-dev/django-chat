@@ -30,9 +30,7 @@ Install postgresql from [here](https://www.postgresql.org/download/).
 
 ## Create DataBase
 
-Create Postgres database with name `chat_data`
-if you want to use another database info change
-`DB_NAME` `DB_USER` `DB_PASSWORD` `DB_HOST` `DB_POST` in `.env` file
+Create a postgres database and set your database name, user, password, host and port in `.env` file with change `DB_NAME` `DB_USER` `DB_PASSWORD` `DB_HOST` `DB_POST` variables!
 
 ## Install Docker
 
@@ -76,7 +74,18 @@ python manage.py createsuperuser
 python manage.py collectstatic
 ```
 
-## Run Codes
+## Test Project
+
+At first, install chrome [webdriver](https://chromedriver.chromium.org/) for test with selenium.
+then copy `chromedriver` <b>binary</b> file in `env/bin/` path
+
+## Run Test
+
+```
+python manage.py test
+```
+
+## Run Server
 
 ```
 python manage.py runserver
@@ -89,17 +98,6 @@ Home Page
 
 Admin Page
 [127.0.0.1:8000/admin](http://127.0.0.1:8000/admin)
-
-## Test Project
-
-At first, install chrome [webdriver](https://chromedriver.chromium.org/) for test with selenium.
-copy `chromedriver` binary file in `env/bin/` path
-
-## Run Test
-
-```
-python manage.py test
-```
 
 ## Links
 
