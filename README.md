@@ -39,7 +39,7 @@ Install docker from [here](https://docs.docker.com/engine/install/).
 ## Setup Redis
 
 ```
-docker run -p 6379:6379 -d redis:5
+sudo docker run -p 6379:6379 -d redis:5
 ```
 
 ## Build Virtual Environment
@@ -58,20 +58,20 @@ pip install -r requirements.txt
 ## Migrate Models
 
 ```
-python manage.py makemigrations chat
-python manage.py migrate
+python3 manage.py makemigrations chat
+python3 manage.py migrate
 ```
 
 ## Add Super User
 
 ```
-python manage.py createsuperuser
+python3 manage.py createsuperuser
 ```
 
 ## Collect Static
 
 ```
-python manage.py collectstatic
+python3 manage.py collectstatic
 ```
 
 ## Test Project
@@ -82,13 +82,13 @@ then copy `chromedriver` <b>binary</b> file in `env/bin/` path
 ## Run Test
 
 ```
-python manage.py test
+python3 manage.py test
 ```
 
 ## Run Server
 
 ```
-python manage.py runserver
+python3 manage.py runserver
 ```
 
 ## Open On Browser
