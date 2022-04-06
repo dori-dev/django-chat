@@ -1,12 +1,13 @@
 # Django Chat
 
-Create <b>chat</b> application with <b>django channels</b>.
+Create advance <b>messenger</b> web application with <b>Django</b>.
 
 #
 
 ## Tools
 
 - [Django](https://www.djangoproject.com/)
+- [Django Channels](https://channels.readthedocs.io/en/stable/)
 - [Python](https://www.python.org/)
 - [Bootstrap](https://getbootstrap.com/)
 - [PostgreSQL](https://www.postgresql.org/)
@@ -99,7 +100,9 @@ Home Page
 Admin Page
 [127.0.0.1:8000/admin](http://127.0.0.1:8000/admin)
 
-## Links
+#
+
+# Links
 
 Download Source Code: [Click Here](https://github.com/dori-dev/django-chat/archive/refs/heads/master.zip)
 
