@@ -2,15 +2,6 @@
 
 Create <b>chat</b> application with <b>django channels</b>.
 
-<!--
-
-install webdriver for test codes https://chromedriver.chromium.org/
-copy "chromedriver" binary file in env/bin/ path!
-python manage.py test
-
-set .env file for database and secret_key
--->
-
 #
 
 ## Tools
@@ -36,6 +27,12 @@ cd django-chat
 ## Install Postgresql
 
 Install postgresql from [here](https://www.postgresql.org/download/).
+
+## Create DataBase
+
+Create Postgres database with name `chat_data`
+if you want to use another database info change
+`DB_NAME` `DB_USER` `DB_PASSWORD` `DB_HOST` `DB_POST` in `.env` file
 
 ## Install Docker
 
@@ -93,7 +90,16 @@ Home Page
 Admin Page
 [127.0.0.1:8000/admin](http://127.0.0.1:8000/admin)
 
-#
+## Test Project
+
+At first, install chrome [webdriver](https://chromedriver.chromium.org/) for test with selenium.
+copy `chromedriver` binary file in `env/bin/` path
+
+## Run Test
+
+```
+python manage.py test
+```
 
 ## Links
 
