@@ -20,13 +20,13 @@
 
     <form action="{{ app_path }}" method="post" id="login-form">{% csrf_token %}
         <div class="form-group has-feedback">
-            <input type="text" id="id_username" name="username" class="form-control" placeholder="Username">
+            <input type="text" id="id_username" name="username" class="form-control" placeholder="نام کاربری">
             <span class="glyphicon glyphicon-user form-control-feedback"></span>
             {{ form.username.errors }}
         </div>
         <div class="form-group has-feedback">
             <input type="password" id="id_password" name="password" class="form-control"
-                   placeholder="Password">
+                   placeholder="رمز عبور">
             <span class="glyphicon glyphicon-lock form-control-feedback"></span>
             {{ form.password.errors }}
             <input type="hidden" name="next" value="{{ next }}"/>
@@ -37,11 +37,11 @@
                 <a href="{{ password_reset_url }}">{% trans 'Forgotten your password or username?' %}</a>
             </div>
         {% endif %}
-        <div class="row">
+        <div>
             <!-- /.col -->
-            <div class="col-xs-4">
+            <div style="text-align: center;">
                 <button type="submit"
-                        class="btn btn-primary btn-block btn-flat">{% trans 'Log In' %}</button>
+                        class="btn btn-primary">ورود</button>
             </div>
             <!-- /.col -->
         </div>
