@@ -21,12 +21,17 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-r-6oa@6p)#jku)f4)-t!)&g%t6h^-3r7y-tgd&k61vsc)^ex2i'
+SECRET_KEY = os.environ.get('SECRET_KEY', 'django-insecure-secret-key')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
-
-ALLOWED_HOSTS = []
+the_debug = os.environ.get('DEBUG', '1') == '1'
+if the_debug:
+    DEBUG = True
+    ALLOWED_HOSTS = []
+else:
+    DEBUG = False
+    default_host = "127.0.0.1,localhost"
+    ALLOWED_HOSTS = os.environ.get('ALLOWED_HOSTS', default_host).split(',')
 
 
 # Application definition
@@ -93,11 +98,11 @@ CHANNEL_LAYERS = {
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'chat_data',
-        'USER': 'postgres',
-        'PASSWORD': 'password',
-        'HOST': 'localhost',
-        'POST': 5432,
+        'NAME': os.environ.get('DB_NAME', 'chat_data'),
+        'USER': os.environ.get('DB_USER', 'postgres'),
+        'PASSWORD': os.environ.get('DB_PASSWORD', 'password'),
+        'HOST': os.environ.get('DB_HOST', 'localhost'),
+        'POST': int(os.environ.get('DB_POST', '5432')),
         'TEST': {
             'NAME': os.path.join(BASE_DIR, 'db_test.sqlite3')
         }
