@@ -14,6 +14,5 @@ python manage.py test
 
 full test app
 good style for chats
-optimize css,js,html codes
-optimize scroll(just scroll in last message at the fetch_message)
+customize bootstrap
 -->
