@@ -87,11 +87,11 @@ body {
 .chat-body .answer.left .text {
   background: var(--reply);
   color: #fff;
-  border-radius: 8px 8px 8px 0;
+  border-radius: 12px 12px 12px 0;
 }
 
 .chat-body .answer.left .text:before {
-  left: -27px;
+  left: -24px;
   border-right-color: var(--reply);
   border-right-width: 12px;
 }
@@ -134,11 +134,11 @@ body {
 .chat-body .answer.right .text {
   background: var(--send);
   color: #fff;
-  border-radius: 8px 8px 0 8px;
+  border-radius: 12px 12px 0 12px;
 }
 
 .chat-body .answer.right .text:before {
-  right: -27px;
+  right: -24px;
   border-left-color: var(--send);
   border-left-width: 12px;
 }
