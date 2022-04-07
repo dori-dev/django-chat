@@ -53,8 +53,9 @@ class ChatConsumer(WebsocketConsumer):
     def notification(self, data: dict):
         room: str = data['room_name']
         members: list = Chat.get_members_list(room)
+        listener: Chat = Chat.objects.get(name="listener")
         async_to_sync(self.channel_layer.group_send)(
-            "chat_BFoULH5Z",  # TODO dynamic this url
+            f"chat_{listener.room_id}",
             {
                 'type': 'chat_message',
                 'message': data["message"],

@@ -61,7 +61,7 @@
     );
 
     const chatSocket2 = new WebSocket(
-      "ws://" + window.location.host + "/ws/id/BFoULH5Z/"
+      "ws://" + window.location.host + "/ws/id/{{ listener_id }}/"
     );
 
     chatSocket2.onmessage = function (e) {

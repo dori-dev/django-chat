@@ -56,7 +56,11 @@ def create_group(request: object):
 
 @login_required(login_url="auth:register")
 def group_view(request: object, room_id: str):
-    if room_id == "BFoULH5Z":
+    listener_room = Chat.objects.filter(name="listener")
+    if not listener_room.exists():
+        Chat.objects.create(name="listener")
+    listener: Chat = Chat.objects.get(name="listener")
+    if room_id == listener.room_id:
         return redirect("/chat/listener2")
     user = request.user
     chat_model = Chat.objects.filter(room_id=room_id)
@@ -70,6 +74,7 @@ def group_view(request: object, room_id: str):
         "username": mark_safe(json.dumps(username)),
         "name": user,
         "room": chat_model[0].name,
+        "listener_id": listener.room_id
     }
     return render(request, "chat/room.html", context)
 
