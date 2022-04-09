@@ -8,3 +8,4 @@ django-filter==21.1
 psycopg2==2.9.3
 django-adminlte-3==0.1.6
 django-dotenv==1.4.2
+django-colorfield==0.6.3
