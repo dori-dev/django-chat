@@ -49,7 +49,14 @@ class ChatAdmin(admin.ModelAdmin):
 
 
 class CustomizeAdmin(admin.ModelAdmin):
-    list_display = ("name", "color")
+    list_display = ("name", "describe", "show_color")
+
+    def show_color(self, model: Customize):
+        color = model.color
+        html = f'<p style="color: {color}">{color}</p>'
+        return format_html(html)
+
+    show_color.short_description = "رنگ"
 
 
 admin.site.register(Message, MessageAdmin)

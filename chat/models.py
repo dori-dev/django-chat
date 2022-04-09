@@ -159,14 +159,20 @@ class Message(models.Model):
 
 class Customize(models.Model):
     name = models.CharField(
-        max_length=128,
+        max_length=64,
+        default="title",
         null=False, blank=False,
-        verbose_name="قسمت")
-    color = ColorField(default="#27ae60")
+        verbose_name="اسم")
+    describe = models.CharField(
+        max_length=128,
+        default="عنوان صفحه اصلی",
+        null=False, blank=False,
+        verbose_name="درباره")
+    color = ColorField(default="#27ae60", verbose_name="رنگ")
 
     def __str__(self):
         return self.name
 
     class Meta:
         verbose_name_plural = "شخصی سازی"
-        verbose_name = "بخش"
+        verbose_name = "رنگ"
