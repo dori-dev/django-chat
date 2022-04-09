@@ -6,11 +6,10 @@ from django.shortcuts import redirect, render
 from django.utils.safestring import mark_safe
 from django.contrib.auth.decorators import login_required
 from django.utils.text import slugify
-from .models import Chat, Customize
+from .models import Chat
 
 
 def index(request: object):
-    Customize.create_default_fields()
     user = request.user
     context = {
         'best_groups': Chat.best_group(),
