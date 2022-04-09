@@ -14,7 +14,8 @@
 <ul>
   {% for group_name in page_obj %}
   <a href="{% url 'index' %}{{ group_name }}">
-    <li class="btn btn-outline-secondary all-group-btn">{{ group_name }}</li>
+    <li style="color: {{group_list_color}}; border-color: {{group_list_color}};"
+      class="btn btn-outline-secondary all-group-btn">{{ group_name }}</li>
   </a>
   {% endfor %}
 </ul>

@@ -159,16 +159,15 @@ class Message(models.Model):
 
 class Customize(models.Model):
     default_fields = {
-        "your-group-color": ("#198754", "گروه های شما"),
-        "hot-group-color": ("#dc3545", "داغ ترین گروه ها"),
-        "last-group-color": ("#0a58ca", "آخرین گروه ها"),
-        "create-group-color": ("#0d6efd", "دکمه ساختن گروه"),
-        "group-list-color": ("#6c757d", "لیست گروه ها"),
+        "your_group_color": ("#198754", "گروه های شما"),
+        "hot_group_color": ("#dc3545", "داغ ترین گروه ها"),
+        "last_group_color": ("#0a58ca", "آخرین گروه ها"),
+        "group_list_color": ("#6c757d", "لیست گروه ها"),
         "reply": ("#16a085", "پیام فرستنده"),
         "send": ("#2980b9", "پیام شما"),
         "input": ("#bdc3c7", "رنگ ورودی پیام"),
-        "input-button": ("#7f8c8d", "رنگ دکمه های چت"),
-        "input-button-hover": ("#95a5a6", "هاور شدن دکمه های چت"),
+        "input_button": ("#7f8c8d", "رنگ دکمه های چت"),
+        "input_button_hover": ("#95a5a6", "هاور شدن دکمه های چت"),
         "placeholder": ("#565f62", "رنگ placeholder"),
         "time": ("#333333", "رنگ زمان"),
     }
@@ -197,7 +196,7 @@ class Customize(models.Model):
     @classmethod
     def get_all_fields(cls):
         fields: QuerySet[Customize] = Customize.objects.all()
-        fields = {field.name: field.color for field in fields}
+        return {field.name: field.color for field in fields}
 
     def __str__(self):
         return self.name

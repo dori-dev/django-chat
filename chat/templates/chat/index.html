@@ -21,7 +21,8 @@
 <ul>
   {% for group_name in your_groups %}
   <a href="{% url 'index' %}{{ group_name }}">
-    <li class="btn btn-outline-success custom-btn">{{ group_name }}</li>
+    <li style="color: {{your_group_color}}; border-color: {{your_group_color}};"
+      class="btn btn-outline-success custom-btn">{{ group_name }}</li>
   </a>
   {% endfor %}
 </ul>
@@ -31,7 +32,8 @@
 <ul>
   {% for group_name in best_groups %}
   <a href="{% url 'index' %}{{ group_name }}">
-    <li class="btn btn-outline-danger custom-btn">{{ group_name }}</li>
+    <li style="color: {{hot_group_color}}; border-color: {{hot_group_color}};"
+      class="btn btn-outline-danger custom-btn">{{ group_name }}</li>
   </a>
   {% endfor %}
 </ul>
@@ -40,7 +42,8 @@
 <ul>
   {% for group_name in last_groups %}
   <a href="{% url 'index' %}{{ group_name }}">
-    <li class="btn btn-outline-primary custom-btn">{{ group_name }}</li>
+    <li style="color: {{last_group_color}}; border-color: {{last_group_color}};"
+      class="btn btn-outline-primary custom-btn">{{ group_name }}</li>
   </a>
   {% endfor %}
 </ul>

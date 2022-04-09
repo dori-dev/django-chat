@@ -20,7 +20,8 @@ def index(request: object):
         your_groups = Chat.your_group(user)
         context['your_groups'] = your_groups
         context['your_groups_len'] = len(your_groups)
-    return render(request, "chat/index.html", context.update(color_fields))
+    context = {**context, **color_fields}
+    return render(request, "chat/index.html", context)
 
 
 @login_required(login_url="auth:register")
@@ -49,12 +50,12 @@ def group_list(request: object):
     context = {
         'page_obj': page_obj
     }
-    return render(request, "chat/group-list.html", context.update(color_fields))
+    context = {**context, **color_fields}
+    return render(request, "chat/group-list.html", context)
 
 
 def create_group(request: object):
-    context = Customize.get_all_fields()
-    return render(request, "chat/create-group.html", context)
+    return render(request, "chat/create-group.html")
 
 
 @login_required(login_url="auth:register")
@@ -80,7 +81,8 @@ def group_view(request: object, room_id: str):
         "room": chat_model[0].name,
         "listener_id": listener.room_id
     }
-    return render(request, "chat/room.html", context.update(color_fields))
+    context = {**context, **color_fields}
+    return render(request, "chat/room.html", context)
 
 
 def about(request: object):
