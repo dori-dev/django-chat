@@ -6,11 +6,12 @@ from django.shortcuts import redirect, render
 from django.utils.safestring import mark_safe
 from django.contrib.auth.decorators import login_required
 from django.utils.text import slugify
-from .models import Chat
+from .models import Chat, Customize
 
 
 def index(request: object):
     user = request.user
+    color_fields = Customize.get_all_fields()
     context = {
         'best_groups': Chat.best_group(),
         'last_groups': Chat.last_group(),
@@ -19,7 +20,7 @@ def index(request: object):
         your_groups = Chat.your_group(user)
         context['your_groups'] = your_groups
         context['your_groups_len'] = len(your_groups)
-    return render(request, "chat/index.html", context)
+    return render(request, "chat/index.html", context.update(color_fields))
 
 
 @login_required(login_url="auth:register")
@@ -40,6 +41,7 @@ def room(request: object, room_name: str):
 
 
 def group_list(request: object):
+    color_fields = Customize.get_all_fields()
     all_groups = Chat.all_groups()
     paginator = Paginator(all_groups, 24)
     page_number = request.GET.get('page')
@@ -47,15 +49,17 @@ def group_list(request: object):
     context = {
         'page_obj': page_obj
     }
-    return render(request, "chat/group-list.html", context)
+    return render(request, "chat/group-list.html", context.update(color_fields))
 
 
 def create_group(request: object):
-    return render(request, "chat/create-group.html")
+    context = Customize.get_all_fields()
+    return render(request, "chat/create-group.html", context)
 
 
 @login_required(login_url="auth:register")
 def group_view(request: object, room_id: str):
+    color_fields = Customize.get_all_fields()
     listener_room = Chat.objects.filter(name="listener")
     if not listener_room.exists():
         Chat.objects.create(name="listener")
@@ -76,7 +80,7 @@ def group_view(request: object, room_id: str):
         "room": chat_model[0].name,
         "listener_id": listener.room_id
     }
-    return render(request, "chat/room.html", context)
+    return render(request, "chat/room.html", context.update(color_fields))
 
 
 def about(request: object):

@@ -194,6 +194,11 @@ class Customize(models.Model):
                 describe=description,
                 color=color)
 
+    @classmethod
+    def get_all_fields(cls):
+        fields: QuerySet[Customize] = Customize.objects.all()
+        fields = {field.name: field.color for field in fields}
+
     def __str__(self):
         return self.name
 
