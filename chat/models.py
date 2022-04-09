@@ -6,6 +6,7 @@ from django.db.models.query import QuerySet
 from django.db import models
 from django.contrib.auth.models import User
 from django.utils.crypto import get_random_string
+from colorfield.fields import ColorField
 
 
 def unique_string():
@@ -154,3 +155,18 @@ class Message(models.Model):
     class Meta:
         verbose_name_plural = "پیام ها"
         verbose_name = "پیام"
+
+
+class Customize(models.Model):
+    name = models.CharField(
+        max_length=128,
+        null=False, blank=False,
+        verbose_name="قسمت")
+    color = ColorField(default="#27ae60")
+
+    def __str__(self):
+        return self.name
+
+    class Meta:
+        verbose_name_plural = "شخصی سازی"
+        verbose_name = "بخش"

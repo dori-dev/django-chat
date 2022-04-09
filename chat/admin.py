@@ -1,9 +1,10 @@
 """chat admin
 """
+from csv import list_dialects
 from datetime import datetime
 from django.contrib import admin
 from django.utils.html import format_html
-from .models import Message, Chat
+from .models import Message, Chat, Customize
 
 
 class MessageAdmin(admin.ModelAdmin):
@@ -47,5 +48,10 @@ class ChatAdmin(admin.ModelAdmin):
     messages.short_description = "تعداد پیام ها"
 
 
+class CustomizeAdmin(admin.ModelAdmin):
+    list_display = ("name", "color")
+
+
 admin.site.register(Message, MessageAdmin)
 admin.site.register(Chat, ChatAdmin)
+admin.site.register(Customize, CustomizeAdmin)

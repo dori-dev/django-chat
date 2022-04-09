@@ -49,6 +49,7 @@ INSTALLED_APPS = [
     'auth',
     'channels',
     'rest_framework',
+    'colorfield',
 ]
 
 MIDDLEWARE = [
