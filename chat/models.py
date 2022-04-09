@@ -158,6 +158,21 @@ class Message(models.Model):
 
 
 class Customize(models.Model):
+    default_fields = {
+        "your-group-color": ("#198754", "گروه های شما"),
+        "hot-group-color": ("#dc3545", "داغ ترین گروه ها"),
+        "last-group-color": ("#0a58ca", "آخرین گروه ها"),
+        "create-group-color": ("#0d6efd", "دکمه ساختن گروه"),
+        "group-list-color": ("#6c757d", "لیست گروه ها"),
+        "reply": ("#16a085", "پیام فرستنده"),
+        "send": ("#2980b9", "پیام شما"),
+        "input": ("#bdc3c7", "رنگ ورودی پیام"),
+        "input-button": ("#7f8c8d", "رنگ دکمه های چت"),
+        "input-button-hover": ("#95a5a6", "هاور شدن دکمه های چت"),
+        "placeholder": ("#565f62", "رنگ placeholder"),
+        "time": ("#333333", "رنگ زمان"),
+    }
+
     name = models.CharField(
         max_length=64,
         default="title",
@@ -169,6 +184,15 @@ class Customize(models.Model):
         null=False, blank=False,
         verbose_name="درباره")
     color = ColorField(default="#27ae60", verbose_name="رنگ")
+
+    @classmethod
+    def create_default_fields(cls):
+        for name, value in Customize.default_fields.items():
+            color, description = value
+            Customize.objects.create(
+                name=name,
+                describe=description,
+                color=color)
 
     def __str__(self):
         return self.name

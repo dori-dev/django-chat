@@ -1,15 +1,16 @@
 """chat views
 """
+import json
 from django.core.paginator import Paginator
 from django.shortcuts import redirect, render
 from django.utils.safestring import mark_safe
 from django.contrib.auth.decorators import login_required
 from django.utils.text import slugify
-import json
-from .models import Chat
+from .models import Chat, Customize
 
 
 def index(request: object):
+    Customize.create_default_fields()
     user = request.user
     context = {
         'best_groups': Chat.best_group(),
